@@ -1,0 +1,93 @@
+<div class="breadcom purpel-bg">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+        <a class="navbar-brand" routerLink="/lesson"><mdb-icon icon="arrow-left"></mdb-icon>  Lesson 5</a>
+      </div>
+      <div class="col-md-6 text-right">
+        <span class="verbalcss">Intrapersonal</span><img src="assets/img/Logical.png" class="" alt="">
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+      <div class="row">
+        <div class="col-md-8 offset-md-2 mt-5">
+            <div class="divborder1 text-center">
+                <h2>THE ORCHARD TIMES</h2>
+              </div>
+          <form>
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <mdb-card>
+                        <mdb-card-body>
+                          <mdb-card-title>
+                          <h4>What is Lorem Ipsum?</h4>
+                          </mdb-card-title>
+                          <mdb-card-text class="textalignstyle">
+                              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                               Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                when an unknown printer took a galley of type and scrambled it to make a type
+                                specimen book. It has survived not only five centuries, but also the leap into
+                                 electronic typesetting, remaining essentially unchanged. It was popularised
+                                 in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                                 more recently with desktop publishing software like Aldus PageMaker including
+                                 versions of Lorem Ipsum.
+                          </mdb-card-text>
+                        </mdb-card-body>
+                      </mdb-card>
+                </div>
+                <div class="col-md-6">
+                  <P>Answer the following questions:</P>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text"  (keyup)="checkform()" name="input1" [(ngModel)]="input1" id="form1" class="form-control">
+                        <label for="form1 " class="md-form-newslabel">Why was the man wearing swimming trunks?</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text"  (keyup)="checkform()" name="input2" [(ngModel)]="input2" id="form2" class="form-control">
+                        <label for="form2" class="md-form-newslabel">Why were the South African Airways agents almost crying?</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective type="text"  (keyup)="checkform()" name="input3" [(ngModel)]="input3" id="form3" class="form-control">
+                        <label for="form3"     class="md-form-newslabel">Why were the South African Airways agents almost crying?</label>
+                    </div>
+                    <div class="md-form">
+                        <input mdbInputDirective  (keyup)="checkform()" name="input4" [(ngModel)]="input4" type="text" id="form4" class="form-control">
+                        <label for="form4"   class="md-form-newslabel">Did the man get on the plane wearing his swimming trunks?</label>
+                    </div>
+                </div>
+                <div class="container">
+                    <mdb-card>
+                        <mdb-card-body>
+                          <mdb-card-title>
+                          </mdb-card-title>
+                          <mdb-card-text class="textalignstyle">
+                              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                               Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                when an unknown printer took a galley of type and scrambled it to make a type
+                                specimen book. It has survived not only five centuries, but also the leap into
+                                 electronic typesetting, remaining essentially unchanged. It was popularised
+                                 in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                                 more recently with desktop publishing software like Aldus PageMaker including
+                                 versions of Lorem Ipsum.
+                          </mdb-card-text>
+                        </mdb-card-body>
+                      </mdb-card>
+                </div>
+            </div>
+
+          <div *ngIf="!hasError">
+              <a (click)="checkpage()"  class="float-right mt-1 mb-5 photoiconandtext" >Next</a>
+
+            </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+  <div class="breadcom purpel-bg  ">
+      <div class="container"></div>
+  </div>
+
+

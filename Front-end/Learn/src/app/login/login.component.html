@@ -1,0 +1,43 @@
+<div class="breadcom purpel-bg">
+  <div class="container-fluid">
+    <h1 class="navbar-brand h1class">Sign In</h1>
+  </div>
+</div>
+<div class="container">
+  <!-- Login form -->
+  <form class="login-form max650 auto" #loginForm="ngForm" (ngSubmit)="Login(UserEmail.value, UserPassword.value)" autocomplete="off">
+    <p class="site-icon">
+      <!-- <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="49.5" fill="white" stroke="#64398C" />
+        <path d="M4.91542 4.79015e-06L10.7831 24.9258L0 19.092L4.91542 4.79015e-06Z" transform="matrix(0.61469 0.788769 -0.766167 0.642641 50.0973 27.0436)" fill="#953FB5" />
+        <path d="M4.96306 4.74254e-06L10.8877 24.678L0 18.9023L4.96306 4.74254e-06Z" transform="matrix(-0.346756 0.937955 0.929146 0.369713 45.0704 63.6641)" fill="#953FB5" />
+        <path d="M2.20615 10.681L10.2954 0L11.0308 37.3835L0 35.8576L2.20615 10.681Z" transform="translate(43.5016 31.6211)" fill="#64398C" />
+        <ellipse cx="3.08335" cy="2.86956" rx="3.08335" ry="2.86956" transform="translate(49.5 17)" fill="#953FB5" />
+      </svg> -->
+      <img src="assets/img/logo.png" class="logoimg" alt="">
+    </p>
+    <div class="md-form">
+      <input type="email" #UserEmail ngModel id="UserEmail" name="UserEmail" class="form-control" mdbInputDirective required [disabled]="submittingForm">
+      <label for="defaultForm-email">Your email</label>
+    </div>
+    <div class="md-form">
+      <input type="password" id="UserPassword" name="UserPassword" #UserPassword ngModel class="form-control" mdbInputDirective required [disabled]="submittingForm">
+      <label for="defaultForm-pass">Your password</label>
+    </div>
+    <div class="row justify-content-center m-t-25 m-b-25">
+      <div class="col-6">
+       <!--  <re-captcha [(ngModel)]="formModel.captcha" name="captcha" required #captchaControl="ngModel"></re-captcha> -->
+      </div>
+    </div>
+    <div class="text-center">
+      <button type="submit" class="btn btn-default waves-light yellow-bg form-submit" mdbWavesEffect [disabled]="submittingForm || !loginForm.valid ">Login</button>
+    </div>
+  </form>
+  <div class="text-center m-t-45">
+    <a routerLink="/reset-password" class="purpel">Reset Passowrd</a>
+  </div>
+  <div class="text-center m-t-25 m-b-25">
+    <a [href]="signupUrl" class="purpel" mdbWavesEffect>Create Account</a>
+  </div>
+  <!-- Login form -->
+</div>

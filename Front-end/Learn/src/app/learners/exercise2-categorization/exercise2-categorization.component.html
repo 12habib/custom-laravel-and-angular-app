@@ -1,0 +1,66 @@
+<div class="breadcom purpel-bg">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+        <a class="navbar-brand" routerLink="/lesson"><mdb-icon icon="arrow-left"></mdb-icon>  Lesson 5</a>
+      </div>
+      <div class="col-md-6 text-right">
+        <span class="verbalcss">Categorization</span><img src="assets/img/Logical.png" class="" alt="">
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 offset-md-2 mt-5 mb-5">
+        <div class="text-center">
+          <h5>Have you ever been embarrassed at the airport?</h5>
+        </div>
+        <div>
+            <p class="mt-3 ">We’re going to study an embarrassing story at an airport. First, try to remember some vocabulary about airports to help you understand the story.</p>
+        </div>
+        <div class="mt-3" *ngFor="let question of questions; let i=index">
+          <div>
+            <p><b>{{question.vocabulary}} :</b><span> {{ question.text}}</span></p>
+          </div>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Verb</th>
+                <th scope="col">Noun</th>
+                <th scope="col">Proper Noun</th>
+              </tr>
+            </thead>
+            <tbody>
+
+                  <tr *ngFor="let row of tablerowArray; let j=index">
+                      <td mwlDroppable  [ngStyle]="border[j]" (drop)="dropVerbData($event,j)">{{insert_in_Verb_col[j]}}</td>
+                      <!-- <ng-template #withoutdropevent>
+                        <td>{{insert_in_Verb_col[j]}}</td>
+                      </ng-template> -->
+                      <td mwlDroppable [ngStyle]="border1[j]" (drop)="dropNounData($event,j)">{{insert_in_Noun_col[j]}}</td>
+                      <!-- <ng-template #withoutnoundropeventt>
+                          <td>{{insert_in_Noun_col[j]}}</td>
+                        </ng-template> -->
+                      <td mwlDroppable [ngStyle]="border2[j]" (drop)="dropProperNounData($event,j)">{{insert_in_PropNoun_col[j]}}</td>
+                      <!-- <ng-template #withoutpropnoundropevent>
+                          <td>{{insert_in_PropNoun_col[j]}}</td>
+                        </ng-template> -->
+                    </tr>
+
+            </tbody>
+          </table>
+          <div class="col-md-12  text-center">
+              <div class="d-inline" *ngFor="let dragbutton of dragbuttons; let i=index">
+                  <button class="btn2 btnpad btn-primary waves-light" mdbWavesEffect mwlDraggable  [dropData]=" dragbutton">{{ dragbutton}}</button>
+              </div>
+
+          </div>
+          <div *ngIf="!hasError">
+            <a (click)="checkpage()"  class="float-right mt-1 mb-5 photoiconandtext" >Next</a>
+
+        </div>
+      </div>
+    </div>
+  </div>

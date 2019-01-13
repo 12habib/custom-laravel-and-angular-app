@@ -1,0 +1,214 @@
+.newsbackground {
+  background-image: url("/assets/img/NewspaperBG.png");
+  background-repeat: no-repeat;
+  background-position: top;
+  z-index: auto;
+  display: table;
+  width: 100%;
+  height: auto;
+  background-size: 100% 100%;
+
+}
+
+.looping_anim {
+  max-width: 50%;
+}
+
+.mtul {
+  margin-top: 22%;
+  list-style: none;
+  padding-left: 0;
+}
+
+@media (min-width: 321px) and (max-width: 480px) {
+  .mtul {
+    margin-top: 29%;
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .newspaper {
+    margin-top: 30% !important;
+    padding: 5%;
+    text-align: justify;
+  }
+
+  .divbutton {
+    padding: 10px !important;
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .successBorder {
+    border: 1px dashed green;
+    padding: 5px;
+    text-align: center;
+    box-sizing: border-box;
+    margin-top: 15px;
+  }
+
+  .dropBorder {
+    border: 1px dashed black;
+    margin-top: 10px;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+}
+
+@media (min-width:320px) and (max-width: 358px) {
+  .mtul {
+    margin-top: 29%;
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .newspaper {
+    margin-top: 45% !important;
+    padding: 5%;
+    text-align: justify;
+  }
+
+  .divbutton {
+    padding: 7px !important;
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .dropBorder {
+    border: 1px dashed black;
+    padding: 15px !important;
+    margin-top: 15px;
+  }
+
+  .successBorder {
+    border: 1px dashed green;
+    padding: 3px;
+    text-align: center;
+    margin-top: 15px;
+  }
+}
+
+@media (min-width:359px) and (max-width:375px) {
+  .mtul {
+    margin-top: 29%;
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .newspaper {
+    margin-top: 40% !important;
+    padding: 5%;
+    text-align: justify;
+  }
+
+  .divbutton {
+    padding: 10px !important;
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .dropBorder {
+    border: 1px dashed black;
+    padding: 15px !important;
+    margin-top: 15px;
+  }
+
+  .successBorder {
+    border: 1px dashed green;
+    padding: 3px;
+    text-align: center;
+    margin-top: 15px;
+  }
+
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .mtul {
+    margin-top: 25%;
+    list-style: none;
+    padding-left: 0;
+  }
+}
+
+.btn2 {
+  vertical-align: top;
+}
+
+.disableBack {
+  background-color: grey !important;
+
+
+}
+
+.marpadnewspaper {
+  margin-top: 21%;
+  padding-bottom: 20%;
+  text-align: justify;
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-top: 3%;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .typeh {
+    font-size: 15px;
+  }
+
+
+
+
+}
+
+.dropBorder {
+  border: 1px dashed black;
+  padding: 25px;
+  margin-top: 15px;
+}
+
+.divbutton {
+  padding: 15px;
+}
+
+.pos {
+  position: relative;
+  left: 0px !important;
+  top: 0px !important;
+}
+
+
+.marpadnewspaper2 {
+  margin-top: 21%;
+  padding-bottom: 3%;
+  text-align: justify;
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-top: 3%;
+}
+
+.btn-custom {
+  background: #0b51c5;
+  color: white !important;
+}
+
+.invisible {
+  display: none !important;
+}
+
+.successBorder {
+  border: 1px dashed green;
+  padding: 13px;
+  text-align: center;
+  margin-top: 15px;
+
+}
+
+.errorBorder {
+  border: 1px dashed red;
+
+}
+
+.newspaper {
+  margin-top: 18%;
+  padding: 5%;
+  text-align: justify;
+}

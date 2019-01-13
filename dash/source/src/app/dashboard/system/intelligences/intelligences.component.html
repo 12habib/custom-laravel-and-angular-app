@@ -1,0 +1,97 @@
+<!-- <ol class="breadcrumb bg-primary">
+  <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li>
+  <li class="breadcrumb-item"><a routerLink="/dashboard/system">System</a></li>
+  <li class="breadcrumb-item active"><strong>Manage Intelligences</strong></li>
+</ol> -->
+
+<h3 class="page-title">Manage Intelligences</h3>
+
+
+<div class="" id="addIntelZone">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Add Intelligence</h4>
+
+        <form action="" (submit)="AddIntelligence()">
+          <div class="input-group">
+            <input 
+              type="text" 
+              name="newIntelTitle" 
+              [(ngModel)]="newIntel.title"
+              required
+              [disabled]="working"
+              id="newIntelTitle" 
+              class="form-control" 
+              placeholder="Insert title for the intelligence">
+            <span class="input-group-append">
+              <button [disabled]="working" type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+            </span>
+          </div>
+        </form>
+        
+      </div>
+    </div>
+</div>
+<br>
+<div class="" id="IntelListZone">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">List of Intelligences:</h4>
+
+        
+        
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th width="200">Title</th>
+              <th>Updater</th>
+              <th>Added</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="working">
+            <tr>
+              <td colspan="5"><i class="fa fa-spinner fa-spin"></i> Please wait...</td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="!working">
+            <tr *ngFor="let intel of intelligences" [style.opacity]="intel.working ? 0.5 : 1">
+              <td>{{ intel.id }}</td>
+              <td>
+                <strong *ngIf="!intel.editing" class="intel-title" (dblClick)="console.log('test')">{{ intel.title }}</strong>
+                <div *ngIf="intel.editing" class="form-group border-blue">
+                    <input [disabled]="intel?.working === true" type="text" class="form-control" [(ngModel)]="intel.newTitle">
+                    <div class="btn-group btn-group-sm" role="group">
+                      <button [disabled]="intel?.working === true" class="btn btn-warning" (click)="UpdateIntelligence(intel)"><i class="fa fa-check"></i></button>
+                      <button [disabled]="intel?.working === true" class="btn btn-default" (click)="intel.editing = !intel.editing; intel.newTitle = intel.title"><i class="fa fa-times-circle"></i></button>
+                    </div>
+                </div>
+              </td>
+              <td>
+                  {{ intel.added_by?.name || '' }}
+              </td>
+              <td>
+                  {{ intel.created_at }}
+              </td>
+              <td>
+                  <div ngbDropdown class="d-inline-block">
+                    <button [disabled]="intel?.working === true" class="btn btn-secondary" type="button" [id]="'actionButton-' + intel.id " ngbDropdownToggle>
+                      Actions
+                    </button>
+                    <div ngbDropdownMenu>
+                      <a (click)="intel.editing = !intel.editing" class="dropdown-item">Edit</a>
+                      <a class="dropdown-item text-danger" (click)="RemoveIntelligence(intel)">Delete</a>
+                    </div>
+                  </div>
+              </td>
+            </tr>
+            <tr *ngIf="intelligences?.length == 0 && !working">
+              <td colspan="5">Nothing Found</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+</div>

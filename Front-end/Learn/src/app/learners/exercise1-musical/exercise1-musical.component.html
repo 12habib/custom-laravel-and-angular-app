@@ -1,0 +1,90 @@
+<div class="breadcom purpel-bg">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+      <a class="navbar-brand" routerLink="/lesson"><mdb-icon icon="arrow-left"></mdb-icon> Exercise 1 Musical</a>
+    </div>
+    <div class="col-md-6 text-right">
+      <span class="verbalcss">Musical</span><img src="assets/img/Hands.png" class="" alt="">
+    </div>
+  </div>
+  </div>
+</div>
+<div class="divpstyle">
+    <p><b>Listen to these sounds</b></p>
+</div>
+
+  <div class="row">
+    <div class="col-md-6 offset-md-3 mt-5 mb-5">
+          <div class="row">
+            <ng-container *ngFor="let audio of audios; let i=index">
+            <div class="col offset-md-3">
+
+                <div *ngIf="!playingAudio[i]; else pauseButton">
+                    <i class="fa playiconsize fa-play-circle-o fa-3x" (click)="playAudio(i)"></i>
+                  </div>
+
+                  <ng-template #pauseButton>
+                      <i class="fa playiconsize fa-pause-circle-o fa-3x" (click)="pauseAudio(i)"></i>
+                  </ng-template>
+
+
+            </div>
+          </ng-container>
+          </div>
+    <!-- <div class="text-center mt-3">
+        <a (click)="checkpage()"  class=" mt-1 mb-5 photoiconandtext" >Next</a>
+
+    </div> -->
+    </div>
+  </div>
+<div class="col-md-12 divpstyle">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <p><b>Can you make the same noise?</b></p>
+      </div>
+    </div>
+</div>
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-6 offset-md-3 mt-3">
+        <p><b>How do people often feel when they hear this noise?</b></p>
+    </div>
+  </div>
+</div>
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-6 offset-md-3 ">
+      <div class="text-center">
+          <img src="assets/img/image.png" alt="">
+      </div>
+      <p><b>Below are some common expressions related to embarrassment. What do you think they mean?</b></p>
+      <div class="md-form">
+      <div class=" mt-5 pb-3">
+          <p class="text-center">“Red in the face”</p>
+          <input  type="text" (keyup)="checkform()" name="input1" [(ngModel)]="input1" id="form1" class="form-control">
+        </div>
+        <div class=" mt-5 pb-3">
+            <p class="text-center">“His face is redder than a smacked bum”</p>
+            <input  type="text" (keyup)="checkform()" id="form2" name="input2" [(ngModel)]="input2" class="form-control">
+        </div>
+        <div class="mt-5 pb-3">
+            <p class="text-center"> “I wouldn’t be caught dead doing that”</p>
+            <input  type="text" (keyup)="checkform()" id="form3" name="input3" [(ngModel)]="input3" class="form-control">
+        </div>
+
+        <div *ngIf="!hasError">
+            <a (click)="checkpage()"  class="float-right mt-1 mb-5 photoiconandtext" >Next</a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="breadcom purpel-bg ">
+    <div class="container"></div>
+</div>
+
+
+

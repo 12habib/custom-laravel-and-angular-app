@@ -1,0 +1,30 @@
+<button (click)="currentScreen = currentScreen + 1">Add</button>
+<button (click)="currentScreen = currentScreen - 1">Reduce</button>
+
+
+
+<div *ngFor="let screen of partData.screens; let screenIndex = index" style="background: whitesmoke; border: 1px solid black">
+
+  <h3>Screen ID: {{ screen.id }}</h3>
+
+  <div
+    style="background: lightgreen; border: 2px solid red;"
+    *ngFor="let element of screen.elements; let elemIndex = index">
+    
+    <div [ngSwitch]="element.type">
+      
+      <div *ngSwitchCase="'paragraph'">
+        <p>Lorem Ip[sum</p>
+      </div>
+
+      <div *ngSwitchCase="'buildman'">
+        <p>SHOW BUILDMAN</p>
+      </div>
+      
+      <div *ngSwitchDefault></div>
+    
+    </div>
+
+  </div>
+
+</div>

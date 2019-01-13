@@ -1,0 +1,95 @@
+.btnpad1{
+  padding-right: 0.6rem !important;
+  padding-left: 0.6rem !important;
+  padding-top: 0.2rem !important;
+  padding-bottom: 0.2rem !important;
+  font-size: 20px;
+}
+
+.btn-success1 {
+  background-color: #00c851 ;
+  color: #fff ;
+}
+.btn1 {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  padding: 0.84rem 2.14rem;
+  font-size: 0.81rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  margin: 0.375rem;
+  border: 0;
+  border-radius: 0.125rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  white-space: normal;
+  word-wrap: break-word;
+  color: #fff;
+}
+/* You can add global styles to this file, and also import other style files */
+.card1{
+  width:100%;
+  border:1px solid black;
+  height:100%;
+  padding:10px;
+}
+.card1,p{
+  margin:0px !important;
+
+}
+.pad{
+  padding: 0px !important;
+}
+.pos{
+  position: absolute !important;
+  top:10%;
+
+}
+.btnpad {
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+.imgheight{
+  height: 209px;
+}
+#overlay{
+  position:absolute;
+  top:0px;
+  left:0px;
+  bottom:20%;
+  right:0px;
+  background-color:#fff;
+}
+.verbalcss{
+  color:#fff;
+}
+#overlay1{
+  position:absolute;
+  top:0px;
+  left:0px;
+  bottom:20%;
+  right:0px;
+  background-color:#fff;
+}
+.rob{
+  width: 150px;
+}
+.close{
+  top:5px;
+}
+.shadowimg{
+position: relative;
+height: 10px;
+background: radial-gradient(45px at 50% 50%, rgb(45, 38, 38) 0%, rgba(103, 60, 60, 0) 100%);
+
+}
+.brd{
+border-bottom: 1.5px solid #70AD47;
+margin: 2px;
+width: 25px;
+display: inline-block;
+
+
+}
+

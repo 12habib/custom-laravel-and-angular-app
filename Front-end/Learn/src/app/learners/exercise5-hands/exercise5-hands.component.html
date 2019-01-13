@@ -1,0 +1,56 @@
+<div class="breadcom purpel-bg">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <a class="navbar-brand" routerLink="/lesson">
+          <mdb-icon icon="arrow-left"></mdb-icon> Lesson 5
+        </a>
+      </div>
+      <div class="col-md-6 text-right">
+        <span class="verbalcss">Hands</span
+        ><img src="assets/img/Hands.png" class="" alt="" />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="conntainer mt-5">
+  <div class="col-md-10 col-sm-12 offset-md-1 col-12">
+    <div class="row ">
+      <ng-container *ngFor="let item of dragDropQuestions.columns">
+        <div class="col">
+          <h3 class="text-center typeh">{{ item }}</h3>
+        </div>
+      </ng-container>
+    </div>
+    <ng-container
+      *ngFor="let dropAnswer of dragDropQuestions.entries; let ind = index"
+    >
+      <div class="row">
+        <ng-container *ngFor="let dropArea of dropAnswer; let in = index">
+          <div class=" col">
+            <div
+              class="dropBorder"
+              appMatrixDroppable
+              [attr.data-accept]="dropArea"
+              id="droppable "
+              (onDrop)="matrixDrop($event)"
+            >
+              <p></p>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+    <div class=" mt-5">
+      <ng-container *ngFor="let answer of randomArr; let i = index">
+        <div class=" row text-center ">
+          <ng-container *ngFor="let ans of answer; let in = index">
+            <div class=" col text-center " id="draggable" appMatrixDragAndDrop>
+              <p class="btn-success divbutton">{{ ans }}</p>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

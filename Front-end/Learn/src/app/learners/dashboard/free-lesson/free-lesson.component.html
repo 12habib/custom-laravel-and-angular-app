@@ -1,0 +1,73 @@
+
+<!-- Number of Parts: {{ totalParts }}
+top five:
+<table class="table table-bordered">
+  <tbody>
+    <tr *ngFor="let entry of topFive">
+      <td>{{ entry.title }}, {{ entry.ratio }}%</td>
+      <td>{{ entry.occurances }} occurances</td>
+    </tr>
+  </tbody>
+</table> -->
+<div class="root ">
+   <ng-container *ngIf="checkpagename =='Visual/Spatial' ">
+      <app-visuallesson2 (emitFunctionOfParent)="checkpage()"></app-visuallesson2>
+   </ng-container>
+   <ng-container *ngIf="checkpagename =='Visual/Spatial2' ">
+    <app-visuallesson (emitFunctionOfParent)="checkpage()"></app-visuallesson>
+ </ng-container>
+   <ng-container *ngIf="checkpagename=='Hands' ">
+    <app-handslesson (emitFunctionOfParent)="checkpage()"></app-handslesson>
+ </ng-container>
+ <ng-container *ngIf="checkpagename=='Hands2' ">
+    <app-hands2 (emitFunctionOfParent)="checkpage()"></app-hands2>
+ </ng-container>
+ <ng-container *ngIf="checkpagename=='Logical' ">
+    <app-logical (emitFunctionOfParent)="checkpage()"></app-logical>
+ </ng-container>
+ <ng-container *ngIf="checkpagename=='Logical2' ">
+    <app-logicallesson2 (emitFunctionOfParent)="checkpage()"></app-logicallesson2>
+ </ng-container>
+ <ng-container *ngIf="checkpagename=='Verbal/Writing' ">
+    <app-buildman-lesson (emitFunctionOfParent)="checkpage()"></app-buildman-lesson>
+ </ng-container>
+ <ng-container *ngIf="checkpagename=='Verbal/Writing2' ">
+  <app-verballesson2 (emitFunctionOfParent)="checkpage()"></app-verballesson2>
+</ng-container>
+ <ng-container *ngIf="checkpagename=='Bodily' ">
+  <app-bodilylesson (emitFunctionOfParent)="checkpage()"></app-bodilylesson>
+</ng-container>
+<ng-container *ngIf="checkpagename=='Bodily2' ">
+    <app-bodilylesson2 (emitFunctionOfParent)="checkpage()"></app-bodilylesson2>
+  </ng-container>
+  <ng-container *ngIf="checkpagename=='Intrapersonal' ">
+    <app-intrapersonal (emitFunctionOfParent)="checkpage()"></app-intrapersonal>
+  </ng-container>
+  <ng-container *ngIf="checkpagename=='Intrapersonal2' ">
+    <app-intrapersonal2 (emitFunctionOfParent)="checkpage()"></app-intrapersonal2>
+  </ng-container>
+  <ng-container *ngIf="checkpagename=='Verbal/Oral' ">
+    <app-verbaloral (emitFunctionOfParent)="checkpage()"></app-verbaloral>
+  </ng-container>
+  <ng-container *ngIf="checkpagename=='Verbal/Oral2' ">
+    <app-verbaloral2 (emitFunctionOfParent)="checkpage()"></app-verbaloral2>
+  </ng-container>
+  <ng-container *ngIf="checkpagename=='Categorization' ">
+    <app-democategorization (emitFunctionOfParent)="checkpage()"></app-democategorization>
+  </ng-container>
+  <ng-container *ngIf="checkpagename=='Categorization2' ">
+    <app-democategorization2 (emitFunctionOfParent)="checkpage()"></app-democategorization2>
+  </ng-container>
+  <ng-container *ngIf="checkpagename=='Musical' ">
+    <app-demomusical (emitFunctionOfParent)="checkpage()"></app-demomusical>
+  </ng-container>
+  <ng-container *ngIf="checkpagename=='Musical2' ">
+    <app-demomusical2 (emitFunctionOfParent)="checkpage()"></app-demomusical2>
+  </ng-container>
+
+
+<ng-container *ngIf="checkpagename=='end' ">
+    <app-lessoncomplete></app-lessoncomplete>
+</ng-container>
+
+</div>

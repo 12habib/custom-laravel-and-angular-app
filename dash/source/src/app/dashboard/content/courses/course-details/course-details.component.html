@@ -1,0 +1,318 @@
+<ol class="breadcrumb bg-primary">
+  <!--
+    <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li>
+  -->
+  <!--
+    <li class="breadcrumb-item"><a routerLink="/dashboard/content">Content</a></li>
+  -->
+  <li class="breadcrumb-item">
+    <a routerLink="/dashboard/content/courses">Courses</a>
+  </li>
+  <li class="breadcrumb-item active" *ngIf="course">
+    Details: <strong>{{ course.title }}</strong>
+  </li>
+</ol>
+
+<div class="row" *ngIf="course != null">
+  <div class="col-md-3">
+    <div class="card" id="coursePicAction">
+      <div class="card-body">
+        <div class="cover-photo">
+          <p><strong>Cover Photo:</strong></p>
+          <img
+            [src]="
+              course.cover_photo_url
+                ? course.cover_photo_url
+                : 'https://dummyimage.com/300x300/b0b0b0/fff&text=None'
+            "
+            alt="Cover Photo"
+            class="img-fluid clickable"
+            (click)="OpenCoverPhotoChangeModal(photoSelectModal)"
+          />
+          <p class="help-block">
+            <small>Click on the picture to change it</small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <div class="card" id="courseModules">
+      <div class="card-body">
+        <h4 class="card-title has-hidden-elements">
+          {{ course.title }}
+          <button
+            class="btn btn-link display-on-hover"
+            (click)="DisplayCourseEditModal(courseEditModal)"
+          >
+            <i class="fa fa-edit"></i>
+          </button>
+        </h4>
+        <hr />
+        <p class="card-text">
+          Level: <strong>{{ course.level.title | uppercase }}</strong>
+        </p>
+        <p class="card-text">Description:</p>
+        <section
+          id="desctiption"
+          [innerHTML]="course.description | safeHtml"
+        ></section>
+      </div>
+    </div>
+    <div style="margin-bottom: 20px;"></div>
+    <div class="card" *ngIf="course.modules">
+      <div class="card-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-auto mr-auto">
+              <h4 class="card-title">
+                Modules
+                <span class="badge badge-info">{{
+                  course.modules.length
+                }}</span>
+              </h4>
+            </div>
+            <div class="col-auto">
+              <button
+                class="btn btn-primary btn-sm"
+                (click)="OpenNewModuleModal(newModuleModal)"
+              >
+                <i class="fa fa-plus"></i> New Module
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <table class="table table-condensed table-hover table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th class="text-center">Lessons</th>
+              <th class="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let module of course.modules">
+              <td>{{ module.id }}</td>
+              <td>
+                {{ module.title }}
+                <i
+                  *ngIf="!module.active"
+                  class="fa fa-eye-slash"
+                  title="Hidden"
+                ></i>
+              </td>
+              <td class="text-center">{{ module.total_lessons }}</td>
+              <td class="text-center">
+                <a
+                  [routerLink]="['module', module.id]"
+                  class="btn btn-outline-success"
+                  >Manage</a
+                >
+              </td>
+            </tr>
+
+            <tr *ngIf="course.modules?.length === 0">
+              <td colspan="4">Nothing found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #photoSelectModal let-cPhoto="close" let-dPhoto="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Update Cover Photo</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="dPhoto('cross')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form enctype="multipart/form-data" (submit)="UploadCoverPhoto()">
+      <div class="form-group">
+        <label for="newCoverPhoto">Select a file</label>
+        <input
+          class="form-control"
+          type="file"
+          id="newCoverPhoto"
+          required
+          name="newCoverPhoto"
+          (change)="HandleCoverPhotoSelection($event.target.files)"
+          accept="image/x-png,image/gif,image/jpeg"
+        />
+        <p class="help-block">
+          <small
+            >Please select an image. Maximum size: 200KB. Supported formats:
+            JPG, JPEG, PNG, GIF.</small
+          >
+        </p>
+      </div>
+      <div
+        *ngIf="coverPhotoErrors?.length"
+        class="alert alert-danger"
+        role="alert"
+      >
+        <strong>Error:</strong> <br />
+        <ul>
+          <li *ngFor="let err of coverPhotoErrors">{{ err }}</li>
+        </ul>
+      </div>
+
+      <button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="coverPhotoErrors?.length > 0"
+      >
+        <i class="fa fa-save"></i> Save
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-warning"
+        (click)="RemoveCoverPhoto()"
+      >
+        <i class="fa fa-times"></i> Remove Photo
+      </button>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-default" (click)="dPhoto('cancel')">
+      &times; Cancel
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #courseEditModal let-cEdit="close" let-dEdit="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Edit Course:</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="dEdit('cross')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form (submit)="UpdateCourseInfo()">
+      <div class="form-group">
+        <label for="newTitle">Title</label>
+        <input
+          type="text"
+          id="newTitle"
+          name="newTitle"
+          [(ngModel)]="course.newTitle"
+          required
+          class="form-control"
+          [ngModelOptions]="{ standalone: true }"
+        />
+      </div>
+      <div class="form-group">
+        <label for="newDescription">Description</label>
+        <!--
+          <textarea id="newDescription" name="newDescription" [(ngModel)]="course.newDescription" required class="form-control" rows="10"></textarea>
+        -->
+        <editor
+          [(ngModel)]="course.newDescription"
+          apiKey="test"
+          [init]="{ plugins: 'link' }"
+          [ngModelOptions]="{ standalone: true }"
+        ></editor>
+      </div>
+
+      <button class="btn btn-primary" type="submit">
+        <i class="fa fa-save"></i> Update
+      </button>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      class="btn btn-danger btn-sm"
+      (click)="DeleteCourse()"
+      type="button"
+    >
+      <i class="fa fa-times-circle"></i> Delete Course
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #newModuleModal let-cNewModule="close" let-dNewModule="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Add New Module</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="dNewModule('cross')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form (submit)="StoreNewModule()">
+      <div class="form-group">
+        <label for="inputModuleTitle">Title</label>
+        <input
+          [(ngModel)]="newModule.title"
+          name="newModuleTitle"
+          type="text"
+          class="form-control"
+          id="inputModuleTitle"
+          placeholder="Insert title"
+        />
+      </div>
+      <div class="form-group">
+        <label for="inputModuleActive">Visibility</label>
+        <select
+          [(ngModel)]="newModule.active"
+          name="newModuleVisibility"
+          class="form-control"
+          id="inputModuleActive"
+        >
+          <option value="1" selected>Public</option>
+          <option value="0">Hidden</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="inputModuleFree">Free?</label>
+        <select
+          [(ngModel)]="newModule.free"
+          name="newModuleFree"
+          class="form-control"
+          id="newModuleFree"
+        >
+          <option value="1" selected>Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+
+      <div class="form-group" *ngIf="newModule.free != true">
+        <label for="inputModulePrice">Price (in USD)</label>
+        <input
+          type="number"
+          min="1"
+          [(ngModel)]="newModule.price"
+          name="newModulePrice"
+          class="form-control"
+          id="newModulePrice"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary">
+        <i class="fa fa-save"></i> Save
+      </button>
+    </form>
+  </div>
+  <div class="modal-footer"></div>
+</ng-template>

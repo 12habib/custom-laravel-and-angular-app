@@ -1,0 +1,98 @@
+<div class="breadcom purpel-bg">
+  <div class="container-fluid">
+    <a class="menu-close" routerLink="/profile"
+      ><mdb-icon icon="arrow-left"></mdb-icon> Update Profile</a
+    >
+  </div>
+</div>
+<div class="container mt-5" *ngIf="user">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div>
+        <img
+          [src]="user.profile_picture || 'http://via.placeholder.com/240x240'"
+          class="mx-auto d-block img-rounded img-fluid d-block"
+          alt="..."
+        />
+      </div>
+      <div>
+        <form action="">
+          <button
+            class="mx-auto d-block btn btn-rounded"
+            (click)="photoInput.click()"
+          >
+            Upload Image
+          </button>
+          <input
+            id="hidefileinput"
+            type="file"
+            accept="image/*"
+            #photoInput
+            (change)="ProcessUploadedPhoto($event)"
+          />
+        </form>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <form (submit)="UpdateProfile()">
+        <p class="h5 text-center mb-4">Update Profile Details</p>
+
+        <div class="md-form">
+          <i class="fa fa-envelope prefix grey-text"></i>
+          <input
+            required
+            type="text"
+            id="defaultForm-name"
+            class="form-control"
+            mdbInputDirective
+            (disabled)="(working)"
+            name="name"
+            [(ngModel)]="user.name"
+          />
+          <label for="defaultForm-name">Your Name</label>
+        </div>
+
+        <div class="md-form">
+          <i class="fa fa-lock prefix grey-text"></i>
+          <input
+            type="password"
+            id="defaultForm-pass"
+            class="form-control"
+            mdbInputDirective
+            (disabled)="(working)"
+            [(ngModel)]="user.password"
+            name="password"
+            (required)="(user.password)"
+          />
+          <label for="defaultForm-pass">New Password</label>
+        </div>
+
+        <div class="md-form">
+          <i class="fa fa-lock prefix grey-text"></i>
+          <input
+            type="password"
+            id="defaultForm-pass2"
+            class="form-control"
+            mdbInputDirective
+            (disabled)="(working)"
+            [(ngModel)]="user.password_confirmation"
+            name="password_confirmation"
+            (required)="(user.password)"
+          />
+          <label for="defaultForm-pass2">Enter Password again</label>
+        </div>
+
+        <div class="text-center">
+          <input
+            type="submit"
+            class="btn btn-rounded  btn-default waves-light"
+            mdbWavesEffect
+            (disabled)="(working)"
+            value="Update"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="breadcom purpel-bg mt-5"><div class="container"></div></div>

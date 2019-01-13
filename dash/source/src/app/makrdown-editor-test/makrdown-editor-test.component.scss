@@ -1,0 +1,46 @@
+.editor-zone {
+  margin-bottom: 30px;
+}
+.content-section-wrapper {
+  margin-bottom: 10px;
+
+  .content-section {
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-bottom: 2px solid blue;
+    margin-bottom: 30px;
+  }
+}
+
+// .fib_node_fixed{
+
+// }
+.fib_node_choices {
+  border-bottom: 1px solid black;
+  padding-bottom: 3px;
+}
+.fib_node_movable {
+  border: 1px solid black;
+  padding-bottom: 3px;
+  padding: 2px;
+}
+.big {
+  font-size: 2em;
+}
+.xbtn-block {
+  background: white;
+  border: 1px solid whitesmoke;
+  max-width: 150px;
+  overflow: auto;
+  white-space: pre-line;
+  min-height: 80px;
+  margin: 5px;
+}
+
+.element-section-heading {
+  font-weight: bold;
+  margin-bottom: 5px;
+  background: whitesmoke;
+  padding: 5px 10px;
+  border-radius: 4px;
+}

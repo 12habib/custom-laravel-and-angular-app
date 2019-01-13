@@ -1,0 +1,76 @@
+<div class="breadcom purpel-bg">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+      <a class="navbar-brand" routerLink="/lesson"><mdb-icon icon="arrow-left"></mdb-icon>  Lesson 5</a>
+    </div>
+    <div class="col-md-6 text-right">
+      <span class="verbalcss">Verbal Oral</span><img src="assets/img/Logical.png" class="" alt="">
+    </div>
+  </div>
+  </div>
+</div>
+
+<div class="container ">
+
+  <div class="row">
+    <div class="col-md-6 offset-md-3 mt-3">
+      <div class="text-left">
+          <b>Look at the following sentence:</b>
+          <p>“When he finished his swim he realized he had forgotten to bring a change of clothes”</p>
+      </div>
+      <form>
+          <div class="md-form">
+
+              <div class="mt-5 pb-3">
+
+                    <p class="text-left"><b>Look at the following sentences to understand why we need to use Past perfect.</b></p>
+                    <p class="text-left">i)	The man went to Lake Malawi. After, he went to the airport.</p>
+                    <p class="text-left">ii)	The man went to Lake Malawi after he went to the airport.</p>
+                    <p class="text-left">In sentence i) which event is first? Going to Lake Malawi or the airport?</p>
+                    <input mdbInputDirective type="text" id="form4" (keyup)="checkform()" name="input6" [(ngModel)]="input6" class="form-control">
+
+                    <p class="text-left">In sentence i) which event is first? Going to Lake Malawi or the airport?</p>
+                    <input mdbInputDirective type="text" id="form4" (keyup)="checkform()" name="input4" [(ngModel)]="input4" class="form-control">
+                    <div>
+                      <p>It’s very difficult to hear any difference! That is why past perfect is important – it
+                         tells us when things happen in the past.
+                         Past perfect makes communication easier! It also makes our sentences more complex.</p>
+                    </div>
+                    <div class=" mt-5 pb-3">
+                      <p class="text-left"><b>Look at the following sentence:</b></p>
+                      <p class="text-center">“When he finished his swim he realized he had forgotten to bring a change of clothes”</p>
+                      <p class="text-left">Write the past simple</p>
+                      <input mdbInputDirective type="text" id="form1" (keyup)="checkform()" name="input1" [(ngModel)]="input1" class="form-control">
+                      <p class="text-left">Write the past perfect</p>
+                      <input mdbInputDirective type="text" id="form1" (keyup)="checkform()" name="input5" [(ngModel)]="input5" class="form-control">
+                    </div>
+                    <div class=" mt-5 pb-3">
+                        <p class="text-left">Which event happened first? Finishing his swim or forgetting his clothes?</p>
+                        <input mdbInputDirective type="text" id="form2" (keyup)="checkform()" name="input2" [(ngModel)]="input2" class="form-control">
+                    </div>
+                    <div class="mt-5 pb-3">
+                      <p>Past Simple = Subject + Past Simple (example: “1 Went…”)</p>
+                        <p class="text-left"> How do we write past perfect?</p>
+                        <input mdbInputDirective type="text" id="form3" (keyup)="checkform()" name="input3" [(ngModel)]="input3" class="form-control">
+                    </div>
+
+                </div>
+
+              <div class="pull-right"  *ngIf="!hasError">
+                  <a routerLink="/exercise5_verbaloralpart1"  class="float-right mt-1 mb-5 photoiconandtext" >Next</a>
+              </div>
+
+
+          </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+<div class="breadcom purpel-bg  ">
+    <div class="container"></div>
+</div>
+
+
+

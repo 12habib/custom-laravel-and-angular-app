@@ -1,0 +1,863 @@
+<!--
+  we don't loop through the parts; we only disply the selected part's data
+-->
+<div class="lessonPart" *ngIf="lessonparts[currentPart]">
+  <!-- now we loop through the screens -->
+  <div class="breadcom purpel-bg">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <p class="navbar-brand h1class" >
+            
+            {{ lessonparts[currentPart].part_title }}
+          </p>
+        </div>
+        <div class="col-md-6 text-right"
+          *ngIf="lessonparts[currentPart]?.intelligence">
+          <span class="verbalcss">{{
+            lessonparts[currentPart].intelligence.title
+            }}</span><img src="assets/img/Verbal Writing.png" class="" alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="this.wroking != true" class="partScreen">
+    <!-- now we loop through the screen elements -->
+    <div class="element" *ngFor="let element of
+      lessonparts[currentPart].screens[currentScreen].elements;
+      let ei= index;
+      trackBy: trackByFn">
+      <div class="element-inner" [ngSwitch]="element.type">
+        <div class="element-display" *ngSwitchCase="'audio_simple'">
+          <div class="mt-5">
+            <p class="text-center">
+              <b>{{ element.title }}</b>
+            </p>
+          </div>
+          <div class="container mt-3">
+            <div class="col-md-6 offset-md-3">
+              <div class="row">
+                <ng-container *ngFor="let audio of element.audio_data;
+                  let mui= index;
+                  trackBy: trackByFn">
+                  <div class="col text-center">
+                    <div *ngIf="!audio.Played; else: pauseButton">
+                      <i class="fa playiconsize fa-play-circle fa-3x"
+                        (click)="PlayAudioFile(audio, element, mui)"></i>
+                    </div>
+                    <ng-template #pauseButton>
+                      <i class="fa playiconsize fa-pause-circle fa-3x"
+                        (click)="audio.player.pause(); audio.Played= false"></i>
+                    </ng-template>
+                  </div>
+                </ng-container>
+              </div>
+              <div class="alert alert-info mt-5 text-center">
+                <i class="fa fa-info-circle"></i> At least one audio file must
+                be fully played to move forward
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngSwitchCase="'buildman'">
+          <div class="container mt-5 mb-2">
+            <p class="text-center">{{ title }}</p>
+            <div class="col-md-4 offset-md-4">
+              <div class="row mb-3 justify-content-center">
+                <div class="col-md-6">
+                  <div class="text-center imgheight">
+                    <img src="assets/img/Full Robot.png" class="rob" alt="" />
+                    <div id="overlay" [ngStyle]="styleimg"></div>
+                  </div>
+                  <div class="text-center shadowimg"></div>
+                  <h5 class="text-center">Good robot</h5>
+                </div>
+                <div class="col-md-6">
+                  <div class="text-center imgheight">
+                    <img src="assets/img/BadRobot.png" class="rob" alt="" />
+                    <div id="overlay1" [ngStyle]="styleimg1"></div>
+                  </div>
+                  <div class="text-center shadowimg"></div>
+                  <h5 class="text-center">Bad robot</h5>
+                </div>
+              </div>
+              <div class="text-center mt-2">
+                <h2>
+                  <ng-container *ngFor="let ans of answer; let i= index">
+                    <span class="brd" [ngStyle]="enterstyle[i]">
+                      {{ ans }}
+                    </span>
+                  </ng-container>
+                </h2>
+              </div>
+              <div class="text-center">
+                <ng-container *ngFor="let ques of question; let i= index">
+                  <button type="button" [disabled]="disable[i]"
+                    (click)="adddata(question[i], i, element)" class="btn1
+                    btnpad1 btn-success1" [ngStyle]="clickbuttonstyle[i]"
+                    mdbWavesEffect>
+                    {{ ques }}
+                  </button>
+                </ng-container>
+              </div>
+              <button [disabled]="displaywrongmodal || displaymodal"
+                type="button" (click)="tryagain()" class="btn1 btn-warning
+                btnpad1" mdbWavesEffect>
+                Try Again
+              </button>
+              <div class="modal-dialog justify-content-center pos modal-notify
+                modal-success" *ngIf="displaywrongmodal" role="document">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <button type="button" class="close">
+                      <span aria-hidden="true" (click)="closewrongmodal()">×</span>
+                    </button>
+                    <div class="text-center">
+                      <i class="fa fa-times fa-4x mb-3 animated rotateIn"></i>
+                      <p>You have build the bad robot. Don't Worry. Try Again</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-dialog justify-content-center pos modal-notify
+                modal-success" *ngIf="displaymodal" role="document">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <button type="button" class="close">
+                      <span aria-hidden="true" (click)="closemodal()">×</span>
+                    </button>
+                    <div class="text-center">
+                      <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
+                      <p>
+                        Congratulatons! You have build the robot successfully.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngSwitchCase="'fib_simple'">
+          <div class="col-md-6 offset-md-3 text-center mt-5 mb-5">
+            <p class="md-form">
+              <ng-container *ngFor="let fix of element.data; let fixedindex=
+                index">
+                <span>
+                  <ng-container *ngIf="fix.type === 'fixed'">
+                    <span>{{ fix.node }}</span>
+                  </ng-container>
+                  <ng-container *ngIf="fix.type === 'choices'">
+                    <input type="text" id="form1" [ngStyle]="fix.checkStyle"
+                      (keyup)="check_Diff_ans_from_Form(element, fixedindex)"
+                      [(ngModel)]="fix.ngmodelInput" class="form-control
+                      fill_blanks" />
+                  </ng-container>
+                </span>
+              </ng-container>
+            </p>
+          </div>
+        </div>
+        <div *ngSwitchCase="'colored_blanks'" class="colored_blanks">
+          <div class="col-md-6 offset-md-3 text-center mt-5 mb-5">
+            <p class="pborder" *ngIf="element?.title?.length">
+              <b>{{ element.title }}</b>
+            </p>
+            <div class="row">
+              <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10
+                offset-sm-1 col-12 mt-5 mb-5">
+                <p>Complete the below sentences with the correct block</p>
+              </div>
+            </div>
+            <div class="pborder">
+              <div class="container">
+                <div class="row justify-content-center">
+                  <div class="col-8 mt-5 mb-5">
+                    <div class="mt-3 mb-3 text-left" *ngFor="let highlight of
+                      element.data;
+                      let hi= index;
+                      trackBy: trackByFn">
+                      <ng-container *ngIf="highlight.type === 'choices'">
+                        <button class="btn btn-highlights mr-5" [ngStyle]="{
+                          'background-color': highlight.color }">
+                          {{ highlight.node }}
+                        </button>
+                        <span class="ml-1 parasize">{{ highlight.text }}</span>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <section>
+              <div class="container">
+                <div class="row">
+                  <div class="col mt-5 mb-5">
+                    <div class="question">
+                      <p>
+                        <ng-container *ngFor="let questi of element.data;
+                          let qui= index;
+                          trackBy: trackByFn">
+                          <span *ngIf="questi.type === 'fixed'">
+                            {{ questi.node }}
+                          </span>
+                          <span *ngIf="questi.type === 'choices'">
+                            <span class="box-fill1" appFillInTheBlanksDrop
+                              (blockDrop)="ColoredBlanks_Dropped($event)"
+                              [attr.id]="'questi.node_' + qui"
+                              [attr.data-index]="qui"
+                              [attr.data-element-index]="ei">{{
+                              questi.matched === true ? questi.node : ""
+                              }}</span>
+                          </span>
+                        </ng-container>
+                      </p>
+                    </div>
+                    <div class="answerblock mt-2">
+                      <p class="text-center">
+                        <ng-container *ngFor="let questi of element.data;
+                          let qui2= index;
+                          trackBy: trackByFn">
+                          <ng-container *ngIf="questi.type === 'choices'">
+                            <btn class="btn" [ngStyle]="{
+                              'background-color': element.data[qui2].color
+                              }" [attr.id]="'questi.node_' + qui2"
+                              [attr.data-index]="qui2"
+                              [attr.data-element-index]="ei"
+                              appFillInTheBlanksDrag>{{ questi.node }}</btn>
+                          </ng-container>
+                        </ng-container>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+        <div *ngSwitchCase="'hidden_word'">
+          <div class="col-md-6 offset-md-3 text-center mt-5 mb-5">
+            <h6>Hidden word please click to see.</h6>
+            <ng-container *ngIf="!element.clicked; else: showText">
+              <button class="btn btn-success"
+                (click)="show_Hidden_word(element)">
+                {{ element.button_text }}
+              </button>
+            </ng-container>
+            <ng-template #showText>
+              <h5 [class]="element.showAnim">{{ element.word }}</h5>
+            </ng-template>
+          </div>
+        </div>
+        <div *ngSwitchCase="'reorder_paragraphs'">
+          <div class="container mt-5">
+            <div class="row mt-3">
+              <div class="col-md-10 offset-md-1 mt-5">
+                <p class="text-center mt-2">
+                  <b>Insert text to the box....</b>
+                </p>
+                <div class="row mt-3 mb-5">
+                  <div class="col" *ngIf="!element.hideDiv">
+                    <div class="d-inline" *ngFor="let question of
+                      element.paragraphs;
+                      let pai= index">
+                      <a class="btn btnpad btn-primary waves-light"
+                        mdbWavesEffect mwlDraggable
+                        [ngStyle]="element.paragraphsCompleted[pai]"
+                        [dropData]="{ dropData: question, dropIndex: pai }">{{
+                        question }}</a>
+                      <!-- <button class="btn"></button> -->
+                    </div>
+                  </div>
+                  <div class="col divborder" mwlDroppable
+                    [ngStyle]="element.dropStyle"
+                    (drop)="reOrderParagraphDrop($event, element)">
+                    <div class="divborder1 mt-2 text-center">
+                      <h2>THE ORCHARD TIMES</h2>
+                    </div>
+                    <div class="pt-3 pb-3">
+                      <ng-container *ngFor="let drop of
+                        element.paragraphDropped">
+                        <p class="text-left">{{ drop.dropdata }}</p>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngSwitchCase="'reorder_sentence'">
+          <div class="container mt-5">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-center">
+                  <b>Put the sentence back together in order </b>
+                </p>
+                <div class="row">
+                  <div class="col-md-10 offset-md-1 mt-4">
+                    <div class="pt-2">
+                      <p class="text-center">
+                        <ng-container *ngFor="let answer of element.data; let
+                          seni= index">
+                          <span>
+                            <span *ngIf="answer.type === 'fixed'">
+                              {{ answer.node }}
+                            </span>
+                            <span *ngIf="answer.type === 'movable'" mwlDroppable
+                              [ngStyle]="answer.dropStyle2"
+                              (drop)="reOrSenDrop($event, answer, seni,
+                              element)">
+                              {{ answer.sentenceDropped }}
+                            </span>
+                          </span>
+                        </ng-container>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-2 mb-5">
+                  <div class="col-md-10 offset-md-1 text-center">
+                    <div class="d-inline text-center">
+                      <ng-container *ngFor="let question of element.tempArr;
+                        let rei= index">
+                        <a class="btn btn-primary waves-light" mdbWavesEffect
+                          mwlDraggable [ngStyle]="element.dropStyle[rei]"
+                          [dropData]="{ dropData: question, dropIndex: rei }">{{
+                          question }}</a>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngSwitchCase="'mcq_horizontal'">
+          <div class="col-md-6 offset-md-3 text-center mt-5 mb-5">
+            <h6>{{ element.question }}</h6>
+            <ng-container *ngFor="let mcq of element.choices; let i= index">
+              <button type="button" [ngStyle]="mcq.buttonStyle"
+                (click)="checkMcqAnswer(mcq)" class="btn3 btn12-success"
+                mdbWavesEffect>
+                {{ mcq.text }}
+              </button>
+            </ng-container>
+          </div>
+        </div>
+        <div *ngSwitchCase="'paragraph'">
+          <div class="mt-5">
+            <!-- <h6 class="text-center">Paragraph Element</h6> -->
+            <div class="col-md-6 offset-md-3 mt-3 mb-5"
+              [innerHTML]="element.source | safeHTML: 'html'"></div>
+          </div>
+        </div>
+        <div *ngSwitchCase="'mcq_vertical'">
+          <div class="col-md-6 offset-md-3 mt-5 mb-5">
+            <h6>{{ element.question }}</h6>
+            <div class="form-check" *ngFor="let mcqv of element.choices; let j=
+              index">
+              <input [class]="mcqv.formClass" [(ngModel)]="mcqv.userAnswer"
+                (change)="checkBoxfired(mcqv, element)" mdbInputDirective
+                type="checkbox" id="{{mcqv.text}}" />
+              <label [class]="mcqv.formlabelClass" for="{{mcqv.text}}">{{
+                mcqv.text
+                }}</label>
+              <ng-container *ngIf="mcqv.mcqclick === 1">
+                <span class="spansuccess">Right Answer</span>
+              </ng-container>
+              <ng-container *ngIf="mcqv.mcqclick === 2">
+                <span class="spanfailed">Wrong Answer</span>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div *ngSwitchCase="'match_words_to_pictures'">
+          <div class="container">
+            <div class="col-md-8 col-sm-12 offset-md-2 mt-5 mb-5">
+              <h6 class="text-center mb-5 mt-2">{{ element.title }}</h6>
+              <div class="row mb-3">
+                <ng-container *ngFor="let mawp of element.pictures; let maj=
+                  index">
+                  <div class="col-md-6 col-sm-6 mb-2">
+                    <div class="col-md-12 col-sm-12">
+                      <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                          <img src="{{mawp}}" alt="" class="imagegwidth" />
+                        </div>
+                        <div class="col-md-6 col-sm-6 card2" mwlDroppable
+                          [ngStyle]="element.dropStyle[maj]"
+                          (drop)="dropPhrase($event, element, maj)">
+                          <p class="mobilep">
+                            {{ element.phraseDropped[maj] }}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+              <div class="text-center">
+                <div class="d-inline" *ngFor="let mawpq of element.tempArr; let
+                  i= index">
+                  <a class="btn btn-primary waves-light" mdbWavesEffect
+                    mwlDraggable [ngStyle]="element.dropStyle2[i]" [dropData]="{
+                    dropData: mawpq, dropIndex: i }">{{ mawpq }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngSwitchCase="'write_from_memory'">
+          <div class="col-md-6 offset-md-3 mt-5 mb-5">
+            <h6 class="text-center">{{ element.title }}</h6>
+            <ng-container *ngFor="let meml of element.lineArray; let j= index">
+              <div class="md-form">
+                <input type="text" id="form{{j}}" (keyup)="checkLines(j,
+                  element)" [ngStyle]="element.dropStyle[j]"
+                  [(ngModel)]="element.lineModelArray[j]" class="form-control"
+                  />
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div *ngSwitchCase="'match_sides'">
+          <div class="container">
+            <div class="col-md-6 offset-md-3 text-center mt-5 mb-5">
+              <h6 class="text-center mb-3">{{ element.title }}</h6>
+              <div class="row mb-3 justify-content-center" *ngFor="let left of
+                element.sides.left; let i= index">
+                <div class="col-md-3 col-sm-12 pad">
+                  <p>{{ left }}</p>
+                </div>
+                <div class="card1 col-md-9 col-sm-12 dropborder" mwlDroppable
+                  [ngStyle]="element.leftDropStyle[i]"
+                  (drop)="dropDataend($event, i, element)">
+                  <p>{{ element.wordDropped[i] }}</p>
+                </div>
+              </div>
+              <div class="">
+                <div class="d-inline" *ngFor="let right of element.tempArr; let
+                  j= index">
+                  <a class="btn btn-primary waves-light" mdbWavesEffect
+                    mwlDraggable [ngStyle]="element.rightDropStyle[j]"
+                    [dropData]="{ dropData: right, dropIndex: j }">{{ right }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- qa -->
+        <div *ngSwitchCase="'qa'">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-6 mt-5 mb-5">
+                <div class="md-form">
+                  <article class="mt-3 mb-3" [innerHtml]="element.helpText || ''
+                    | safeHTML"></article>
+                  <section class="mb-3 p-5">
+                    <h3 class="text-center">
+                      <strong>{{ element.title }} </strong>
+                    </h3>
+                  </section>
+                  <ng-container *ngFor="let answer of element.answers;
+                    let answerIndex= index;
+                    trackBy: trackByFn">
+                    <div class="form-group text-center">
+                      <input type="text" xid="form1" [ngClass]="{
+                        'text-success': answer.correct == true,
+                        'text-error': answer.correct == false
+                        }" (blur)="element.validateAnswer(answer)"
+                        [(ngModel)]="element.answers[answerIndex].text"
+                        class="form-control fill_blanks" />
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- timed_qa -->
+        <div *ngSwitchCase="'timed_qa'" class="timed_qa">
+          <div *ngIf="element.waiting; else: nextelement">
+            <div class="divpstyle mb-5">
+              <p>
+                <b>{{ element.title }}</b>
+              </p>
+            </div>
+            <div class="col-md-8 offset-md-2 mt-3">
+              <div class="progressbar">
+                <article class="mt-3" [innerHtml]="element.helpText | safeHTML"></article>
+                <div class="text-center">
+                  <p>-{{ element.timeout - element.time }}s</p>
+                  <div class="progress mt-4">
+                    <div class="progress-bar progressbarback" role="progressbar"
+                      [ngStyle]="element.width" aria-valuenow="0"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                <img [src]="element.imagesrc" class="looping_anim" alt="" />
+              </div>
+              <div class="">
+                <a (click)="element.clearTimer()" class="float-right mt-1 mb-5
+                  photoiconandtext">Skip Timer</a>
+              </div>
+            </div>
+          </div>
+          <ng-template #nextelement>
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="col-6 mt-5 mb-5">
+                  <div class="md-form">
+                    <article class="mt-3 mb-5" [innerHtml]="element.helpText ||
+                      '' | safeHTML"></article>
+                    <h3 class="text-center mt-5 mb-5">{{ element.title }}</h3>
+                    <ng-container *ngFor="let answer of element.answers;
+                      let answerIndex= index;
+                      trackBy: trackByFn">
+                      <div class="form-group text-center">
+                        <input type="text" xid="form1" [ngClass]="{
+                          'text-success': answer.correct == true,
+                          'text-error': answer.correct == false
+                          }" (blur)="element.validateAnswer(answer)"
+                          [(ngModel)]="element.answers[answerIndex].text"
+                          class="form-control fill_blanks" />
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+        <div *ngSwitchCase="'voice_recording'">
+          <div class="container" *ngIf="element.recordData">
+            <div class="mt-5 row justify-content-center">
+              <!-- <h6 class="text-center">Paragraph Element</h6> -->
+              <div class="col-6 mt-3 mb-5" [innerHTML]="element.helpText |
+                safeHTML: 'html'"></div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="voice_recording_and_playback row
+              justify-content-center">
+              <div class="voice_recording_controls col-12 text-center">
+                <button title="Start Recording" class="btn btn-info"
+                  (click)="StartRecording(element)"
+                  [disabled]="element.recordData.recording == true">
+                  <i class="fa fa-microphone"></i>
+                </button>
+                <button title="Stop Recording" class="btn btn-warning"
+                  (click)="StopRecording(element)"
+                  [disabled]="!element.recordData.recording ||
+                  element.recordData.playing == true">
+                  <i class="fa fa-stop"></i>
+                </button>
+                <button title="Play Recording" class="btn btn-success"
+                  (click)="element.playAudio()"
+                  [disabled]="element.recordData.data == null ||
+                  element.recordData.recording">
+                  <i class="fa fa-play"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngSwitchCase="'speech_recognition'">
+          <div class="container" *ngIf="element.recordData">
+            <div class="mt-5 row justify-content-center">
+              <!-- <h6 class="text-center">Paragraph Element</h6> -->
+              <div class="col-6 mt-3 mb-5" [innerHTML]="element.helpText |
+                safeHTML: 'html'"></div>
+            </div>
+            <div class="SRDATA mt-3 mb-3">
+              <div class="border border-info p-5 text-center">
+                <h3>{{ element.sentence | uppercase }}</h3>
+              </div>
+              <div class="border border-warning p-5 text-center"
+                *ngIf="element.srData.strippedSentence &&
+                element.srData.strippedSR">
+                <h3>
+                  <ng-container *ngFor="let word of element.srData.strippedSR;
+                    let wordI= index;
+                    trackBy: trackByFn">
+                    <span [ngClass]="{
+                      'text-success':
+                      element.srData.strippedSR[wordI] ===
+                      element.srData.strippedSentence[wordI],
+                      'text-danger':
+                      !element.srData.strippedSentence[wordI] ||
+                      element.srData.strippedSR[wordI] !=
+                      element.srData.strippedSentence[wordI]
+                      }">{{ word + " " }}</span>
+                  </ng-container>
+                </h3>
+                <p>
+                  Matches: {{ element.srData.matches }}/{{
+                  element.srData.strippedSentence.length
+                  }}
+                </p>
+              </div>
+            </div>
+            <div class="speech_recognition_and_playback row
+              justify-content-center
+              mt-5">
+              <div class="speech_recognition_controls col-12 text-center">
+                <button title="Start Recording" class="btn btn-info btn-rounded"
+                  (click)="StartRecording(element)"
+                  *ngIf="element.srData.working != true &&
+                  element.recordData.recording != true">
+                  <i class="fa fa-microphone"></i>
+                </button>
+                <button title="Stop Recording" class="btn btn-warning
+                  btn-rounded" (click)="StopRecording(element)"
+                  *ngIf="element.srData.working != true &&
+                  (element.recordData.recording ||
+                  element.recordData.playing == true)">
+                  <i class="fa fa-stop"></i>
+                </button>
+                <button *ngIf="element.srData.working === true" disabled
+                  class="btn btn-disabled btn-rounded">
+                  <i class="fa fa-spin fa-spinner"></i> checking
+                  pronounciation...
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- matrix_matching -->
+        <div *ngSwitchCase="'matrix_matching'" class="div_matrix_matching mb-5"
+          [ngClass]="'div_matrix_matching-' + ei">
+          <div class="container" *ngIf="element?.helpText">
+            <div class="row justify-content-center">
+              <article class="matrix_match_helpText col-8 mb-5 mt-5"
+                [innerHtml]="element.helpText | safeHTML"></article>
+            </div>
+          </div>
+          <div class="container mt-5">
+            <div class="row justify-content-center">
+              <div class="col-8">
+                <div class="row">
+                  <ng-container *ngFor="let item of element.columns; trackBy:
+                    trackByFn">
+                    <div class="col">
+                      <h3 class="text-center typeh">{{ item }}</h3>
+                    </div>
+                  </ng-container>
+                </div>
+                <ng-container *ngFor="let dropAnswer of element.entries;
+                  let ind= index;
+                  trackBy: trackByFn">
+                  <div class="row">
+                    <ng-container *ngFor="let dropArea of dropAnswer;
+                      let in= index;
+                      trackBy: trackByFn">
+                      <div class="col">
+                        <div class="dropBorder" appMatrixDroppable
+                          [attr.data-accept]="dropArea" id="droppable"
+                          (onDrop)="matrixDrop($event)">
+                          <p></p>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </ng-container>
+                <div class="mt-5">
+                  <ng-container *ngFor="let answer of element.randomArr;
+                    let randArrInd= index;
+                    trackBy: trackByFn">
+                    <div class="row text-center">
+                      <ng-container *ngFor="let ans of answer;
+                        let ansInd= index;
+                        trackBy: trackByFn">
+                        <div class="col text-center mt-2 mb-2" id="draggable"
+                          [attr.data-rand-index]="randArrInd"
+                          [attr.data-ans-index]="ansInd"
+                          [attr.data-element-index]="ei" appMatrixDragAndDrop>
+                          <p class="btn-success divbutton">{{ ans }}</p>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- user_upload -->
+        <div *ngSwitchCase="'user_upload'" class="div_user_upload">
+          <div class="container" *ngIf="element.setupData">
+            <div class="row justify-content-center">
+              <div class="col-6 UserInputElement mt-5 mb-5">
+                <article [innerHtml]="element.setupData.helpText | safeHTML"></article>
+                <div class="xempty-box" *ngIf="element.filesToUpload?.length &&
+                  !element.setupData.uploadedFiles">
+                  <table class="table table-bordered table-mini">
+                    <tr *ngFor="let file of element.filesToUpload; let fi=
+                      index">
+                      <td>
+                        <img [src]="file.previewData.blob | safeURL"
+                          class="img-thumbnail" />
+                      </td>
+                      <td>
+                        <button class="btn btn-default btn-xs"
+                          (click)="element.filesToUpload.splice(fi, 1)">
+                          <i class="fa fa-times-circle"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="xempty-box"
+                  *ngIf="element.setupData?.uploadedFiles?.length">
+                  <table class="table table-bordered table-mini">
+                    <tr *ngFor="let fileData of element.setupData.uploadedFiles;
+                      let fdi= index">
+                      <td>
+                        <img [src]="fileData.encoded | safeURL"
+                          class="img-thumbnail" />
+                      </td>
+                      <td>
+                        <button class="btn btn-default btn-xs"
+                          (click)="element.setupData.uploadedFiles.splice(fi,
+                          1)">
+                          <i class="fa fa-times-circle"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="text-danger text-center error-zone">
+                  <p *ngIf="element.uploadErrors?.numberAllowed == true">
+                    Sorry, you may not select more than
+                    {{ element.setupData.numberAllowed }} file{{
+                    element.setupData.numberAllowed > 1 ? "s" : ""
+                    }}.
+                  </p>
+                  <p *ngIf="element.uploadErrors?.type == true">
+                    Please select only {{ element.setupData.type }} type files.
+                  </p>
+                  <p *ngIf="element.uploadErrors?.size == true">
+                    Sorry, the file size exceeds
+                    {{ element.setupData.restraints.size }} KBs. Please select
+                    files <{{ element.setupData.restraints.size }} KBs. </p>
+                </div> <div class="text-center mt-3">
+                  <button class="btn btn-primary"
+                    (click)="UserUploadOpenUploadDialog(element)">
+                    <i class="fa fa-upload"></i>
+                    {{
+                    element.filesToUpload?.length > 0 ? "Upload" : "Choose"
+                    }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- paragraph_loop -->
+        <div *ngSwitchCase="'paragraph_loop'" class="div_paragraph_loop">
+          <div class="container" *ngIf="element?.paragraphs">
+            <div class="row justify-content-center">
+              <div class="col-8">
+                <article class="paragraph_loop_helpText mt-2 mb-5"
+                  [innerHtml]="element.source | safeHTML"></article>
+                <article [ngStyle]="{
+                  opacity: element.changingParagraph === true ? 0.25 : 1
+                  }" class="m-5 p-5 border border-info"
+                  [innerHtml]="element.paragraphs[element.currentIndex] |
+                  safeHTML"></article>
+                <div class="paragraph_loop_question mt-5 text-center">
+                  <h4>{{ element.question }}</h4>
+                </div>
+                <div class="paragraph_loop_buttons mb-5 text-center">
+                  <button [disabled]="element?.changingParagraph === true"
+                    class="btn btn-primary btn-lg" (click)="checkNext()">
+                    Yes
+                  </button>
+                  <button [disabled]="element?.changingParagraph === true"
+                    class="btn btn-primary btn-lg"
+                    (click)="NextParagraph(element)">
+                    No
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- timed_paragraph -->
+        <div *ngSwitchCase="'timed_paragraph'" class="div_timed_paragraph mb-5"
+          [ngClass]="'div_timed_paragraph-' + ei">
+          <div *ngIf="element.waiting; else: nextelement">
+            <div class="divpstyle">
+              <p>
+                <b>{{ element.title }}</b>
+              </p>
+            </div>
+            <div class="col-md-8 offset-md-2">
+              <div class="progressbar">
+                <p class="mt-3 text-center" style="text-align:justify">
+                  {{ element.helpText }}
+                </p>
+                <div class="text-center">
+                  <p>-{{ element.timeout - element.time }}s</p>
+                  <div class="progress mt-4">
+                    <div class="progress-bar progressbarback" role="progressbar"
+                      [ngStyle]="element.width" aria-valuenow="0"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                <img [src]="element.imagesrc" class="looping_anim" alt="" />
+              </div>
+              <div class="">
+                <a (click)="element.clearTimer()" class="float-right mt-1 mb-5
+                  photoiconandtext">Skip Timer</a>
+              </div>
+            </div>
+          </div>
+          <ng-template #nextelement>
+            <div class="container">
+              <div class="row">
+                <div class="col-md-10 offset-md-1 mt-5 col-sm-8 offset-sm-2
+                  col-12
+                  col-lg-6 offset-lg-3">
+                  <div class="newsbackground">
+                    <p class="text-center">
+                      <img src="assets/img/NewspaperLogo.png" alt="Edugami
+                        Times" class="img-fluid" />
+                    </p>
+                    <div class="newspaper" [innerHTML]="element.source |
+                      safeHTML: 'html'"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+        <!-- switch ends -->
+      </div>
+    </div>
+    <ng-container
+      *ngIf="lessonparts[currentPart].screens[currentScreen].elements.completed;
+      else skipButton">
+      <div class="col-md-6 offset-md-3 mr-3">
+        <div class="pull-right">
+          <a (click)="checkPart()" class="float-right mr-5 mt-1 mb-3
+            photoiconandtext">Next</a>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #skipButton>
+      <div class="col-md-6 offset-md-3 mr-3">
+        <div class="pull-right">
+          <a (click)="showNextButton()" class="float-right mr-5 mt-1 mb-3
+            photoiconandtext">Skip</a>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <!-- element ends -->
+</div>
+<!-- part screen ends -->

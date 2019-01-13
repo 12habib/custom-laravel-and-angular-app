@@ -1,0 +1,71 @@
+<div class="breadcom purpel-bg">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <a class="navbar-brand" routerLink="/lesson">
+          <mdb-icon icon="arrow-left"></mdb-icon> User Upload Component Demo
+        </a>
+      </div>
+      <div class="col-md-6 text-right">
+        <span class="verbalcss">Demo</span><img src="assets/img/Logical.png" class="" alt="">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container ">
+
+  <div class="row justify-content-center">
+    <div class="col-6 UserInputElement mt-5 mb-5">
+
+      <article [innerHtml]="setupObject.helpText | safeHTML"></article>
+
+      <div class="xempty-box" *ngIf="FilesToUpload?.length && ! setupObject.uploadedFiles">
+
+        <table class="table table-bordered table-mini">
+          <tr *ngFor="let file of FilesToUpload; let fi = index">
+            <td>
+              <img [src]="file.previewData.blob | safeURL" class="img-thumbnail">
+            </td>
+            <td>
+              <button class="btn btn-default btn-xs" (click)="FilesToUpload.splice(fi, 1)"><i class="fa fa-times-circle"></i></button>
+            </td>
+          </tr>
+        </table>
+
+      </div>
+
+      <div class="xempty-box" *ngIf=" setupObject.uploadedFiles?.length ">
+
+        <table class="table table-bordered table-mini">
+          <tr *ngFor="let fileData of setupObject.uploadedFiles; let fdi = index">
+            <td>
+              <img [src]="fileData.encoded | safeURL" class="img-thumbnail">
+            </td>
+            <td>
+              <button class="btn btn-default btn-xs" (click)="setupObject.uploadedFiles.splice(fi, 1)"><i class="fa fa-times-circle"></i></button>
+            </td>
+          </tr>
+        </table>
+
+      </div>
+
+      <div class="text-danger text-center error-zone">
+        <p *ngIf="uploadErrors?.numberAllowed == true">Sorry, you may not select more than {{ setupObject.numberAllowed
+          }} file{{setupObject.numberAllowed > 1 ?
+          's' : ''}}.</p>
+        <p *ngIf="uploadErrors?.type == true">Please select only {{ setupObject.type }} type files.</p>
+        <p *ngIf="uploadErrors?.size == true">Sorry, the file size exceeds {{setupObject.restraints.size}} KBs. Please
+          select files < {{ setupObject.restraints.size }} KBs.</p> </div> <div class="text-center mt-3">
+            <button class="btn btn-primary" (click)="UserUploadOpenUploadDialog()"><i class="fa fa-upload"></i> {{ FilesToUpload?.length? 'Upload' : 'Choose' }}</button>
+      </div>
+
+
+
+    </div>
+  </div>
+
+</div>
+<div class="breadcom purpel-bg  ">
+  <div class="container"></div>
+</div>

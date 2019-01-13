@@ -1,0 +1,45 @@
+<div class="breadcom purpel-bg">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+        <a class="navbar-brand" routerLink="/lesson"><mdb-icon icon="arrow-left"></mdb-icon>Demo Lesson</a>
+      </div>
+      <div class="col-md-6 text-right">
+        <span class="verbalcss">Bodily</span><img src="assets/img/Bodily.png" class="" alt="">
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="divpstyle">
+      <p><b>Insert cartoon to the box....</b></p>
+  </div>
+  <div class="container ">
+    <div class="row">
+      <div class="col-md-8 offset-md-2 mt-5">
+
+          <div class="row">
+              <div class="col-md-6">
+
+                  <div class="iconinlineblock" [ngStyle]="positionstyle[i]" mwlDraggable *ngFor="let ic of icons; let i=index" (dragging)="dragEnd($event)" [dropData]="ic">
+                    <mdb-icon icon="{{ic}}" class="pl-3 pt-3" size="5x"></mdb-icon>
+                  </div>
+
+              </div>
+              <div class="col-md-6 divborder  heightofdropcol iconinlineblock"  mwlDroppable (drop)="dropData($event)">
+
+              </div>
+          </div>
+          <div>
+              <a href="#"  class="float-right mt-1 mb-5 photoiconandtext" >Next</a>
+
+          </div>
+
+
+      </div>
+    </div>
+  </div>
+  <div class="breadcom purpel-bg  ">
+      <div class="container"></div>
+  </div>
+
+

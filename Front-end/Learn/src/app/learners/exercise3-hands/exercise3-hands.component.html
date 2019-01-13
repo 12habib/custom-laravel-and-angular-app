@@ -1,0 +1,143 @@
+<div class="breadcom purpel-bg">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <a class="navbar-brand" routerLink="/lesson">
+          <mdb-icon icon="arrow-left"></mdb-icon>Demo Lesson
+        </a>
+      </div>
+      <div class="col-md-6 text-right">
+        <span class="verbalcss">Bodily</span
+        ><img src="assets/img/Bodily.png" class="" alt="" />
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="waiting; else: nextelement">
+  <div class="divpstyle">
+    <p><b>Embarrassed at the airport</b></p>
+  </div>
+  <div class="col-md-8 offset-md-2">
+    <div class="progressbar">
+      <p class="mt-3 text-center" style="text-align:justify">
+        The definition is in the other room. Walk to the room, read the
+        definition. Remember it. Walk back
+      </p>
+      <div class="text-center">
+        <p>{{ time }}</p>
+        <div class="progress mt-4  ">
+          <div
+            class="progress-bar progressbarback"
+            role="progressbar"
+            [ngStyle]="width"
+            aria-valuenow="0"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <div class=" text-center">
+      <img [src]="imagesrc" class="looping_anim" alt="" />
+    </div>
+    <div class="">
+      <a
+        (click)="clear(timerclock)"
+        class="float-right mt-1 mb-5 photoiconandtext"
+        >SKIP</a
+      >
+    </div>
+  </div>
+</div>
+
+<ng-template #nextelement>
+  <div class="container">
+    <div class="row">
+      <div
+        class="col-md-10 offset-md-1 mt-5 col-sm-8 offset-sm-2 col-12 col-lg-6 offset-lg-3"
+      >
+        <div class="newsbackground">
+          <div class="newspaper" [innerHTML]="news | safeHTML: 'html'"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- //sortable -->
+<!--
+  <div class="next">
+    <div class="divpstyle">
+      <p><b>Insert text to the box....</b></p>
+  </div>
+  <div class="container ">
+    <div class="row mt-5">
+      <div class="col-md-10 offset-md-1 mt-5">
+          <div class="col-md-12 col-sm-12">
+          <div class="row mb-5">
+
+              <div class="col-md-10 col-lg-6 col-sm-10 offset-md-1 offset-sm-1 offset-lg-3 newsbackground" >
+                <div class="mt-5">
+
+                    <ul class="mtul" id="sortable" appDigcySortable (onFinished)="HandleSorableData($event)">
+                        <li class="mt-2 " *ngFor="let question of tempArr; let i=index"  [attr.id]="i"><a  class="btn  btnpad btn-custom waves-light" [ngStyle]="backgColor[i]"  mdbWavesEffect>
+                          <p style="text-align:justify; font-size:12px;">{{question}}</p>
+                        </a>
+                      </li>
+                      </ul>
+                </div>
+
+              </div>
+          </div>
+        </div>
+          <div class="mt-5" *ngIf="!hasError">
+              <a (click)="checkpage()"  class="float-right mt-1 mb-5 photoiconandtext" >Next</a>
+
+          </div>
+      </div>
+    </div>
+  </div>
+  </div>
+-->
+<!-- matrix -->
+<!--
+  <div class="conntainer">
+    <div class="col-md-8 col-sm-12 offset-md-2 col-12">
+      <div class="row mt-5">
+        <ng-container *ngFor="let item of dragDropQuestions.columns">
+          <div class="col-md-4 col-sm-4 col-4">
+            <h3 class="text-center typeh">{{item}}</h3>
+          </div>
+        </ng-container>
+      </div>
+      <div class="row">
+        <ng-container *ngFor="let dropAnswer of dragDropQuestions.entries; let ind= index">
+
+          <ng-container *ngFor="let dropArea of dropAnswer let in=index">
+            <div class="col-md-4 col-sm-4 col-4">
+              <div class="dropBorder" appMatrixDroppable [attr.data-accept]="dropArea " id="droppable " (onDrop)="matrixDrop($event)">
+                <p></p>
+              </div>
+            </div>
+
+          </ng-container>
+        </ng-container>
+      </div>
+      <div class=" row text-center mt-5">
+        <ng-container *ngFor="let answer of dragDropQuestions.entries; let i=index">
+
+          <ng-container *ngFor="let ans of answer let in=index">
+
+            <div class="col-md-4 col-4 col-sm-4 text-center " id="draggable" appMatrixDragAndDrop>
+              <p class="btn-success divbutton">
+                {{ans}}
+              </p>
+            </div>
+
+
+  </ng-container>
+
+  </ng-container>
+  </div>
+  </div>
+-->

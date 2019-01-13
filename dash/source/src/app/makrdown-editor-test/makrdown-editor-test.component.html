@@ -1,0 +1,610 @@
+<div id="working" class="text-center" *ngIf="working">
+  <p><i class="fa fa-spin fa-spinner"></i> working...</p>
+</div>
+<ol class="breadcrumb bg-primary">
+  <li class="breadcrumb-item" *ngIf="course"><a [routerLink]="['/dashboard/content/courses/details', course_id]">{{
+      course.title }}</a></li>
+  <li class="breadcrumb-item" *ngIf="module"><a [routerLink]="['../../../../../../../module', module_id]">{{
+      module.title }}</a></li>
+  <li class="breadcrumb-item" *ngIf="lesson"><a [routerLink]="['../../../../../../../module', module_id, 'lesson', lesson_id]">{{
+      lesson.title }}</a></li>
+  <li class="breadcrumb-item active" *ngIf="exercise"><strong>{{ exercise.title }}</strong></li>
+</ol>
+<hr>
+<div class="row">
+  <div class="col-12" id="editor" *ngIf="part">
+    <!-- #variableHeader -->
+    <div class="card" id="variableHeader">
+      <div class="card-body">
+        <div class="row">
+          <div class="col" id="variationDetails">
+            <p *ngIf="part?.intelligence">Intelligence: <strong>{{ part.intelligence.title }}</strong></p>
+            <div id="duplicateZone">
+              <div class="form-group">
+                <label for="duplicteFrom">Duplicate Content from:</label>
+                <select name="duplicteFrom" id="duplicteFrom" [(ngModel)]="duplicteFrom" *ngIf="exercise?.parts">
+                  <option value=""></option>
+                  <ng-container *ngFor="let prt of exercise.parts; let pi = index">
+                    <option *ngIf="part_id != prt.id" [value]="prt.id">{{ prt.intelligence.title }} ({{ prt.published?
+                      'Published' : 'Unpublished' }})</option>
+                  </ng-container>
+                </select>
+                <button class="btn btn-xs" (click)="DuplicateContent()">Go</button>
+              </div>
+            </div>
+          </div>
+          <div class="col" id="variationNav">
+            <p class="variationNave-title"><strong>Variations:</strong></p>
+            <div class="intel-variations-list" *ngIf="exercise?.parts">
+              <a *ngFor="let prt of exercise.parts; let pi = index" class="btn btn-sm mr-1" [ngClass]="{ 'btn-success' : prt.published, 'btn-danger' : !prt.published, 'big' : prt.id == part_id }" [routerLink]="['../../', exercise.id, prt.id]">{{ pi + 1 }}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /#variableHeader -->
+    <br>
+    <h4 class="text-center text-info">Content:</h4>
+    <br>
+    <div class="contentEditor mb-4" *ngFor="let screen of part.screens; let si = index" [id]="'screen_' + screen.id">
+      <!-- <p class="text-center">--- <strong>SCREEN {{ si + 1 }}</strong> ---</p>
+      <div class="editor-zone editorButtons">
+        <div class="card">
+          <div class="card-body">
+
+            <div class="row">
+              <div class="col-4 buttons-zone">
+                <div class="form-group">
+                    <label>Add Elements to Screen {{ si + 1 }}:</label>
+                    <select  [(ngModel)]="screen.elementToAdd" class="form-control">
+                      <option value="" selected>Please Choose</option>
+                      <option *ngFor="let element of elements" [value]="element.type">{{ element.title }}</option>
+                    </select>
+                </div>
+                <button class="btn btn-default btn-sm" (click)="InsertElement(screen.elementToAdd, si)"><i class="fa fa-plus-circle"></i> Add Element</button>
+              </div>
+              <div class="col screen-title-zone">
+                <div class="form-group">
+                  <label for="">Screen {{ si + 1 }} Title (for editorial purposes)</label>
+                  <input type="text" class="form-control" placeholder="Add title for editorial purposes" [(ngModel)]="screen.title">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div> -->
+      <div class="editor-zone editorLayout">
+        <div class="card">
+          <div class="card-header">
+            <p class="card-title">Section #{{ si + 1 }}</p>
+            <button class="btn btn-xs btn-warning float-right" (click)="RemoveScreen(si)"><i class="fa fa-times"></i>
+              Delete Section</button>
+          </div>
+          <div class="card-body">
+            <div *ngIf="screen?.elements.length < 1">
+              <p>No elements added yet</p>
+            </div>
+            <div class="content-section-wrapper" *ngFor="let component of screen.elements;  let i = index; trackBy: trackByFn">
+              <div class="content-section-control text-right">
+                <p>
+                  Element: <strong>{{ component.type }}</strong>
+                  <button class="btn btn-error btn-sm" (click)="RemoveSection(i, si)"><i class="fa fa-times-circle"></i></button>
+                </p>
+              </div>
+              <!-- paragraph -->
+              <div class="content-section content-paragraph" *ngIf="component.type == 'paragraph'">
+                <editor [(ngModel)]="component.source" [init]="tinymceInit"></editor>
+              </div>
+              <!-- paragraph_loop -->
+              <div class="content-section content-paragraph_loop" *ngIf="component.type == 'paragraph_loop'">
+                <article>
+                  <p>The user will be shown one paragraph at a time and asked a question, with two buttons. If they
+                    click no, the paragraphs loop one after another in circle. If they click Yes, the user is taken to
+                    the next element and the loop ends.</p>
+                </article>
+                <div class="form-group">
+                  <label>Help text for the user:</label>
+                  <editor [(ngModel)]="component.source" [init]="tinymceInit"></editor>
+                </div>
+                <div class="form-group">
+                  <label>Question for the user:</label>
+                  <input [(ngModel)]="component.question" class="form-control">
+                </div>
+                <div class="paragraph_loop_paragraphs mt-3 mb-3">
+                  <p class="mb-5"><strong>Paragraphs:</strong></p>
+                  <div *ngFor="let para of component.paragraphs; let paraInd = index; trackBy: trackByFn" class="mb-3">
+                    <div class="text-right">
+                      <hr>
+                      <button class="btn btn-xs btn-danger" (click)="component.paragraphs.splice(paraInd, 1)"><i class="fa fa-times-circle"></i>
+                        Delete Paragraph</button>
+                    </div>
+                    <editor [(ngModel)]="component.paragraphs[paraInd]" [init]="tinymceInit"></editor>
+                  </div>
+                </div>
+                <button class="btn btn-primary" [disabled]="component.paragraphs.length === 3" (click)="component.paragraphs.push('')"><i class="fa fa-plus-circle"></i> Add Another Paragraph</button>
+              </div>
+              <!-- timed_paragraph -->
+              <div class="content-section content-timed_paragraph" *ngIf="component.type == 'timed_paragraph'">
+                <div class="form-group">
+                  <label>Timeout (in seconds):</label>
+                  <input type="number" min="10" max="120" [(ngModel)]="component.timeout">
+                </div>
+                <div class="form-group">
+                  <label>Title*:</label>
+                  <input type="text" maxlength="150" [(ngModel)]="component.title" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Help text:</label>
+                  <input type="text" maxlength="250" [(ngModel)]="component.helpText" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Content:</label>
+                  <editor [(ngModel)]="component.source" [init]="tinymceInit"></editor>
+                </div>
+              </div>
+              <!-- blanks-simple -->
+              <div class="content-section content-blanks-simple" *ngIf="component.type == 'fib_simple'">
+                <div class="content-section-input-zone">
+                  <p><small>This element doesn't support multiple lines. Viable answers are separated by a comma.
+                      Viable answers are treated as keywords.</small></p>
+                  <input type="text" class="form-control" [(ngModel)]="component.source" (change)="ParseBlanksSimple(component)">
+                </div>
+                <div class="content-blanks-input-display-section">
+                  <p>
+                    <span *ngFor="let row of component.data" [class]="'fib_node_' + row.type">{{ row.node }}</span>
+                  </p>
+                </div>
+              </div>
+              <!-- colored_blanks -->
+              <div class="content-section content-colored_blanks" *ngIf="component.type === 'colored_blanks'">
+                <div class="content-section-input-zone">
+                  <p><small>This element doesn't support multiple lines. Write words that you want to highlight inside
+                      square brackets <code>[like so]</code>.</small></p>
+                  <input type="text" class="form-control" [(ngModel)]="component.source" (change)="ParseBlanksSimple(component); ParseHighlights(component)">
+                </div>
+                <div class="content-colored_blanks-input-display-section">
+                  <div class="form-group mt-1 mb-1">
+                    <div class="row mt-1 mb-1" *ngFor="let row of component.data; let hi = index; trackBy: trackByFn">
+                      <ng-container *ngIf="row.type === 'choices'">
+                        <div class="col-3">
+                          <p>Phrase/Text:</p>
+                          <p class="btn btn-lg btn-warning" [ngStyle]="{ 'background-color' : row.color }">{{
+                            row.node }}</p>
+                        </div>
+                        <div class="col-3">
+                          <label>Associate a Color:</label>
+                          <select class="form-control form-control lg" [(ngModel)]="component.data[hi].color" [ngStyle]="{ 'background-color' : component.data[hi].color, 'color' : 'white' }">
+                            <option *ngFor="let color of colorChoices; let colorInd = index; trackBy: trackByFn" [value]="color" [attr.selected]=" color === component.data[hi].color " [ngStyle]="{ 'background-color' : color }">
+                              <span>{{ color }}</span>
+                            </option>
+                          </select>
+                        </div>
+                        <div class="col-6">
+                          <label>Please enter the explanatory text for this:</label>
+                          <input type="text" class="form-control" [(ngModel)]="component.data[hi].text">
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- hidden_word -->
+              <div class="content-section content-hidden_word" *ngIf="component.type == 'hidden_word'">
+                <div class="form-group">
+                  <label>Please enter the word to display upon clicking a button:</label>
+                  <input type="text" class="form-control" [(ngModel)]="component.word">
+                </div>
+                <div class="form-group">
+                  <label>Please enter the Button Text:</label>
+                  <input type="text" class="form-control" [(ngModel)]="component.button_text">
+                </div>
+              </div>
+              <!-- mcq_horizontal -->
+              <div class="content-section content-mcq_horizontal" *ngIf="component.type == 'mcq_horizontal'">
+                <div class="form-group">
+                  <label>Please enter the Question:</label>
+                  <input type="text" class="form-control" [(ngModel)]="component.question">
+                </div>
+                <div class="form-group">
+                  <table class="table table-mini">
+                    <thead>
+                      <tr>
+                        <th width="20">Correct?</th>
+                        <th>Choice</th>
+                        <th width="30">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let choice of component.choices; let ci = index">
+                        <td>
+                          <input type="checkbox" [(ngModel)]="choice.correct">
+                        </td>
+                        <td>
+                          <input type="text" class="form-control" [(ngModel)]="choice.text" placeholder="enter choice text">
+                        </td>
+                        <td>
+                          <button class="btn btn-sm btn-danger" (click)="component.choices.splice(ci, 1)"><i class="fa fa-times-circle"></i></button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <button class="btn btn-sm btn-info" (click)="component.choices.push({})"><i class="fa fa-plus-circle"></i>
+                    Add</button>
+                </div>
+              </div>
+              <!-- audio_simple -->
+              <div class="content-section content-audio_simple" *ngIf="component.type == 'audio_simple'">
+                <div class="form-group">
+                  <label>Please enter the Section Title:</label>
+                  <input type="text" class="form-control" [(ngModel)]="component.title">
+                </div>
+                <div class="form-group">
+                  <table class="table table-mini">
+                    <thead>
+                      <tr>
+                        <th width="50">Play</th>
+                        <th>Text</th>
+                        <th width="30">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let audio of component.audio_data; let ai = index">
+                        <td>
+                          <button class="btn btn-text" *ngIf="!audio.playing" (click)="PlayAudio(audio)"><i class="fa fa-play"></i></button>
+                          <button class="btn btn-text" *ngIf="audio.sound && audio.playing" (click)="audio.sound.pause(); audio.playing = false"><i class="fa fa-stop"></i></button>
+                        </td>
+                        <td>
+                          <input type="text" class="form-control" [(ngModel)]="audio.text" placeholder="enter display text">
+                        </td>
+                        <td>
+                          <button class="btn btn-sm btn-danger" (click)="component.audio_data.splice(ai, 1)"><i class="fa fa-times-circle"></i></button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- reminder: si = Screen Index, i = Element index -->
+                  <button class="btn btn-sm btn-info" (click)="AskToUploadAudio(si, i)"><i class="fa fa-plus-circle"></i>
+                    Add</button>
+                </div>
+              </div>
+              <!-- buildman -->
+              <div class="content-section content-buildman" *ngIf="component.type == 'buildman'">
+                <div class="form-group">
+                  <label>Please enter the Section Title:</label>
+                  <input type="text" class="form-control" [(ngModel)]="component.title">
+                </div>
+                <div class="form-group">
+                  <label>Please enter the Word:</label>
+                  <input type="text" class="form-control" [(ngModel)]="component.word">
+                </div>
+              </div>
+              <!-- match_sides -->
+              <div class="content-section content-match_sides" *ngIf="component.type == 'match_sides'">
+                <div class="form-group">
+                  <label>Please enter the Section Title:</label>
+                  <input type="text" class="form-control" [(ngModel)]="component.title">
+                </div>
+                <div class="form-group">
+                  <table class="table table-mini">
+                    <thead>
+                      <tr>
+                        <th>Left</th>
+                        <th>Right</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let left of component.sides.left; let sideIndex = index; trackBy: trackByFn">
+                        <td><input type="text" [(ngModel)]="component.sides.left[sideIndex]" class="form-control"></td>
+                        <td><input type="text" [(ngModel)]="component.sides.right[sideIndex]" class="form-control"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <button class="btn btn-info" (click)="component.sides.left.push(''); component.sides.right.push('');"><i class="fa fa-plus-circle"></i> Add</button>
+              </div>
+              <!-- matrix_matching -->
+              <div class="content-section content-matrix_matching" *ngIf="component.type == 'matrix_matching'">
+                <div class="form-group">
+                  <label>Please enter the Section Title:</label>
+                  <input type="text" class="form-control" [(ngModel)]="component.title">
+                </div>
+                <div class="form-group">
+                  <label>Please enter the help text:</label>
+                  <editor [(ngModel)]="component.helpText" [init]="tinymceInit"></editor>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col">
+                      <label>Number of Columns: <input type="number" (change)="component.validateInputs(component); component.setupMatrix(component)" min="3" max="5" class="ml-5" [(ngModel)]="component.cols"></label>
+                    </div>
+                    <div class="col">
+                      <label>Number of Rows: <input type="number" (change)="component.validateInputs(component); component.setupMatrix(component)" min="2" max="5" class="ml-5" [(ngModel)]="component.rows"></label>
+                    </div>
+                  </div>
+                </div>
+                <!-- the table  -->
+                <table class="table">
+                  <tbody>
+                    <tr *ngFor="let row of component.data; let ri = index; trackBy: trackByFn">
+                      <ng-container *ngFor="let col of row; let coli = index; trackBy: trackByFn">
+                        <td>
+                          <input class="form-control form-control-sm" type="text" [(ngModel)]="component.data[ri][coli]" [placeholder]=" ri === 0 ? 'Column ' + (coli + 1) + ' title' : 'Enter phrase/words' " (change)="component.logMatrix(component)">
+                        </td>
+                      </ng-container>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- qa -->
+              <div class="content-section content-qa" *ngIf="component.type == 'qa'">
+                <p><small>This presents a question where the user has to write answer(s). You provide a question and
+                    some keywords to look for in the answers. If the answer has one of the kewords, it is treated as a
+                    correct answer. Spelling and grammer verficiation will be added later.</small></p>
+                <div class="form-group">
+                  <label>Please enter the Question (also treated as the section title):</label>
+                  <input type="text" class="form-control" [(ngModel)]="component.title" placeholder="i.e. Where do you study?">
+                </div>
+                <div class="form-group">
+                  <label>Kewords (separated by comma):</label>
+                  <input type="text" class="form-control" [(ngModel)]="component.keywords" placeholder="i.e. school,college,university">
+                </div>
+                <div class="form-group">
+                  <label>Please enter useful help text for the user:</label>
+                  <editor [(ngModel)]="component.helpText" [init]="tinymceInit"></editor>
+                </div>
+                <div class="form-group">
+                  <label>Number of answer inputs (how many answers must the user provide?):</label>
+                  <input type="number" min="1" class="form-control" [(ngModel)]="component.numberOfAnswerFields">
+                  <p class="help-block"><small>A group of {{component.numberOfAnswerFields}} input field{{
+                      component.numberOfAnswerFields > 1 ? 's' : ''}} will be presented to the user and the same
+                      keywords will be used to verify the input. </small></p>
+                </div>
+              </div>
+              <!-- timed_qa -->
+              <div class="content-section content-timed_qa" *ngIf="component.type == 'timed_qa'">
+                <p><small>This presents a question where the user has to write answer(s) after the timer runs out. You
+                    provide a question and some keywords to look for in the answers. If the answer has one of the
+                    kewords, it is treated as a correct answer. Spelling and grammer verficiation will be added later.</small></p>
+                <div class="form-group">
+                  <label>Timeout (in seconds):</label>
+                  <input type="number" class="xform-control" [(ngModel)]="component.timeout" min="10" max="120">
+                </div>
+                <div class="form-group">
+                  <label>Please enter the Question (also treated as the section title):</label>
+                  <input type="text" class="form-control" [(ngModel)]="component.title" placeholder="i.e. Where do you study?">
+                </div>
+                <div class="form-group">
+                  <label>Please enter useful help text for the user:</label>
+                  <editor [(ngModel)]="component.helpText" [init]="tinymceInit"></editor>
+                </div>
+                <div class="form-group">
+                  <label>Kewords (separated by comma):</label>
+                  <input type="text" class="form-control" [(ngModel)]="component.keywords" placeholder="i.e. school,college,university">
+                </div>
+                <div class="form-group">
+                  <label>Number of answer inputs (how many answers must the user provide?):</label>
+                  <input type="number" min="1" class="form-control" [(ngModel)]="component.numberOfAnswerFields">
+                  <p class="help-block"><small>A group of {{component.numberOfAnswerFields}} input field{{
+                      component.numberOfAnswerFields > 1 ? 's' : ''}} will be presented to the user and the same
+                      keywords will be used to verify the input. </small></p>
+                </div>
+              </div>
+              <!-- write_from_memory -->
+              <div class="content-section content-write_from_memory" *ngIf="component.type == 'write_from_memory'">
+                <div class="form-group">
+                  <label>Section Title:</label>
+                  <input type="text" class="form-control" [(ngModel)]="component.title" placeholder="i.e. Where do you study?">
+                </div>
+                <div class="form-group">
+                  <label>Sentences to remember (Each sentences in a new line by pressing enter):</label>
+                  <textarea class="form-control" [(ngModel)]="component.lines" placeholder="Seperate lines by pressing enter"></textarea>
+                </div>
+              </div>
+              <!-- match_words_to_pictures -->
+              <div class="content-section content-match_words_to_pictures" *ngIf="component.type == 'match_words_to_pictures'">
+                <p><small>Please add pictures (< 100kb) and phrases. </small> </p> <div class="form-group">
+                      <label>Section Title:</label>
+                      <input type="text" class="form-control" [(ngModel)]="component.title" placeholder="i.e. Where do you study?">
+              </div>
+              <div class="form-group">
+                <table class="table table-mini">
+                  <thead>
+                    <tr>
+                      <th>Picture</th>
+                      <th>Phrase</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let picture of component.pictures; let sideIndex = index">
+                      <td>
+                        <img [src]="component.pictures[sideIndex]" style="max-width: 500px; max-height: 300px; height: auto; width: auto;">
+                      </td>
+                      <td><input type="text" [(ngModel)]="component.phrases[sideIndex]" class="form-control"></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <button class="btn btn-info btn-sm" (click)="AddPictureToWFM(si, i)"><i class="fa fa-picture"></i> Add
+                  Picture</button>
+              </div>
+            </div>
+            <!-- mcq_vertical -->
+            <div class="content-section content-mcq_vertical" *ngIf="component.type == 'mcq_vertical'">
+              <div class="form-group">
+                <label>Please enter the Question:</label>
+                <input type="text" class="form-control" [(ngModel)]="component.question">
+              </div>
+              <div class="form-group">
+                <table class="table table-mini">
+                  <thead>
+                    <tr>
+                      <th width="20">Correct?</th>
+                      <th>Choice</th>
+                      <th width="30">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let choice of component.choices; let ci = index">
+                      <td>
+                        <input type="checkbox" [(ngModel)]="choice.correct">
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" [(ngModel)]="choice.text" placeholder="enter choice text">
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-danger" (click)="component.choices.splice(ci, 1)"><i class="fa fa-times-circle"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <button class="btn btn-sm btn-info" (click)="component.choices.push({})"><i class="fa fa-plus-circle"></i>
+                  Add</button>
+              </div>
+            </div>
+            <!-- reorder_paragraphs -->
+            <div class="content-section content-reorder_paragraphs" *ngIf="component.type == 'reorder_paragraphs'">
+              <p><small>Please add the paragraphs in order:</small></p>
+              <div class="form-group">
+                <label>Section Title:</label>
+                <input type="text" class="form-control" [(ngModel)]="component.title" placeholder="i.e. Where do you study?">
+              </div>
+              <div class="form-group" *ngFor="let paragraph of component.paragraphs; let pi = index; trackBy : trackByFn">
+                <textarea class="form-control" [(ngModel)]="component.paragraphs[pi]" placeholder="type here"></textarea>
+                <button class="btn btn-link" (click)="component.paragraphs.splice(pi, 1)"><i class="fa fa-times-circle"></i>
+                  remove</button>
+              </div>
+              <button class="btn btn-sm btn-info" (click)="component.paragraphs.push('')"><i class="fa fa-plus-circle"></i>
+                Add</button>
+            </div>
+            <!-- reorder_sentence -->
+            <div class="content-section content-reorder_sentence" *ngIf="component.type == 'reorder_sentence'">
+              <div class="content-section-input-zone">
+                <p><small>Please enter the sentence, encapsulate the draggable parts in square brakets.</small></p>
+                <input type="text" class="form-control" [(ngModel)]="component.source" rows="5" (keyup)="ParseMovableSentence(component)">
+              </div>
+              <div class="content-blanks-input-display-section">
+                <p>
+                  <span *ngFor="let row of component.data" [class]="'fib_node_' + row.type">{{ row.node }}</span>
+                </p>
+              </div>
+            </div>
+            <!-- user_upload -->
+            <div class="content-section content-user_upload" *ngIf="component.type == 'user_upload'">
+              <div class="content-section-input-zone">
+                <p><small>Please enter the help text for the user:</small></p>
+                <editor [(ngModel)]="component.setupData.helpText" [init]="tinymceInit"></editor>
+              </div>
+              <div class="content-user_upload-input-options-section mt-5">
+                <!-- @TODO: Change to selection in phase 2 -->
+                <p>File Type: <strong>Image</strong></p>
+                <div class="form-group">
+                  <label>Maximum file size (in KBs) per file</label>
+                  <input type="number" class="form-control" min="1" max="4096" [(ngModel)]="component.setupData.restraints.size">
+                  <p class="text-info">The images will be automatically resized down to max 1024px width. This limits
+                    the user from selecting too large a file. But not the end file size that is actually saved.</p>
+                </div>
+                <div class="form-group">
+                  <label>Maximum number of files:</label>
+                  <input type="number" class="form-control" min="1" max="4" [(ngModel)]="component.setupData.numberAllowed">
+                </div>
+              </div>
+            </div>
+            <!-- voice_recording -->
+            <div class="content-section content-voice_recording" *ngIf="component.type == 'voice_recording'">
+              <div class="form-group">
+                <label>Title:</label>
+                <input type="text" [(ngModel)]="component.title" class="form-control" placeholder="Enter title (optional)">
+              </div>
+              <div class="form-group">
+                <label>Help text (required):</label>
+                <editor [(ngModel)]="component.helpText" [init]="tinymceInit"></editor>
+              </div>
+              <article class="mt-3">
+                <p>The user will be offered an interface where they will be able to record saying something and then
+                  play it back. The maximum time for recordings is 30s.</p>
+              </article>
+            </div>
+            <!-- speech_recognition -->
+            <div class="content-section content-speech_recognition" *ngIf="component.type == 'speech_recognition'">
+              <article class="help-block">
+                <p><i class="fa fa-info-circle"></i> This component will offer the user some controls to record
+                  themselves
+                  saying something. Then the
+                  recorded data will be tested with a machine recognition software against the given sentence. This
+                  will allow the
+                  users to know if they are pronouncing something properly.</p>
+              </article>
+              <div class="form-group">
+                <label>Title:</label>
+                <input type="text" [(ngModel)]="component.title" class="form-control" placeholder="Enter title (optional)">
+              </div>
+              <div class="form-group">
+                <label>Help text (required):</label>
+                <editor [(ngModel)]="component.helpText" [init]="tinymceInit"></editor>
+              </div>
+              <div class="form-group">
+                <label>Sentence the user will say (max 200 characters):</label>
+                <input type="text" [(ngModel)]="component.sentence" class="form-control" placeholder="Miles to go before I sleep" maxlength="200">
+              </div>
+              <article class="mt-3">
+                <p>The user will be offered an interface where they will be able to record saying something and then
+                  play it back. The maximum time for recordings is 10s.</p>
+              </article>
+            </div>
+            <!-- editor elements ends -->
+          </div>
+        </div>
+        <div class="card-footer editor-add-buttons">
+          <ngb-accordion>
+            <ngb-panel>
+              <ng-template ngbPanelTitle>
+                <span><i class="fa fa-plus-circle"></i> Add Content</span>
+              </ng-template>
+              <ng-template ngbPanelContent>
+                <ngb-alert [dismissible]="false" *ngIf="screen.totalWeight >= 9">
+                  <i class="fa fa-exclamation-circle"></i> This section has exceeded the supported number of content
+                  elements in it. Due to performance concerns, more content cannot be added to this section unless you
+                  remove some content from it.
+                </ngb-alert>
+                <div class="row">
+                  <div class="col-4">
+                    <p class="element-section-heading">Most Used</p>
+                    <button [disabled]="screen.totalWeight >= 9 || (screen.totalWeight + 3) > 9" (click)="InsertElement('paragraph', si)" class="btn btn-default btn-sm xbtn-block"><i class="fa fa-edit"></i>
+                      Add Text/Picture</button>
+                    <p class="element-section-heading">Timed</p>
+                    <ng-container *ngFor="let element of elements">
+                      <button [disabled]="screen.totalWeight >= 9 || (screen.totalWeight + element.weight) > 9" *ngIf="element.type != 'paragraph' && element.type.includes('timed') " (click)="InsertElement(element.type, si)" class="btn btn-default btn-sm xbtn-block"><i class="fa " [ngClass]=" element.icon ? element.icon : 'fa-plus' "></i>
+                        {{ element.title }}</button>
+                    </ng-container>
+                  </div>
+                  <div class="col-8">
+                    <p class="element-section-heading">Others</p>
+                    <div class="scrollable-vertical p-1">
+                      <ng-container *ngFor="let element of elements">
+                        <button [disabled]="screen.totalWeight >= 9 || (screen.totalWeight + element.weight) > 9" *ngIf="element.type != 'paragraph' && !element.type.includes('timed') " (click)="InsertElement(element.type, si)" class="btn btn-default btn-sm xbtn-block"><i class="fa" [ngClass]=" element.icon ? element.icon : 'fa-plus' "></i>
+                          {{ element.title }}</button>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </ngb-panel>
+          </ngb-accordion>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.content-editor -->
+  <div class="row">
+    <div class="col text-left">
+      <button class="btn btn-lg btn-primary" (click)="AddScreen()"><i class="fa fa-plus-circle"></i>Add Section</button>
+    </div>
+    <div class="col text-right">
+      <button class="btn btn-lg btn-success" (click)="SavePart()"><i class="fa fa-plus-save"></i>Save</button>
+      <br>
+      <label *ngIf="part" for="publishPart" class="p-2 mr-3">Publish <input type="checkbox" id="publishPart" [(ngModel)]="part.published"></label>
+    </div>
+  </div>
+</div>
+</div>

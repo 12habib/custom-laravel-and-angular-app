@@ -1,0 +1,219 @@
+<!--
+  <ol class="breadcrumb bg-primary">
+    <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li>
+    <li class="breadcrumb-item"><a routerLink="/dashboard/system">System</a></li>
+    <li class="breadcrumb-item active"><strong>Manage Course Levels</strong></li>
+  </ol>
+-->
+
+<h3 class="page-title">Manage Course Levels</h3>
+
+<div class="row">
+  <div class="col-md-4" id="AddLevelsZone">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Add Level</h4>
+
+        <form action="" (submit)="AddCourseLevel()">
+          <div class="form-group">
+            <label for="newLevelTitle">Title</label>
+            <input
+              type="text"
+              name="newLevelTitle"
+              [(ngModel)]="newLevel.title"
+              required
+              [disabled]="working"
+              id="newLevelTitle"
+              class="form-control"
+              placeholder="Insert title for the Level"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="newLevelOrder">Order</label>
+            <input
+              type="number"
+              name="newLevelOrder"
+              [(ngModel)]="newLevel.order"
+              required
+              [disabled]="working"
+              id="newLevelOrder"
+              class="form-control"
+              placeholder="Insert order for the Level"
+            />
+            <p class="help-block">
+              <small
+                >If an order is provided, all levels after that order will be
+                incremented to match the new order. If none is provided, the
+                order will automatically be placed at the bottom.</small
+              >
+            </p>
+          </div>
+
+          <button [disabled]="working" type="submit" class="btn btn-primary">
+            <i class="fa fa-save"></i> Save
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8" id="LevelsListZone">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">List of Levels:</h4>
+
+        <button
+          class="btn btn-sm btn-outline-primary"
+          (click)="openSortingModal(content)"
+        >
+          <i class="fa fa-sort"></i> Order Levels
+        </button>
+
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th width="50">Order</th>
+              <th width="200">Title</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let level of courseLevels; let order = index">
+              <td *ngIf="level?.editing != true">{{ level.order }}</td>
+              <td
+                *ngIf="level?.editing != true"
+                title="Added by: {{ level.added_by.name }} @ {{ level.created_at }}"
+              >
+                {{ level.title }}
+              </td>
+              <td *ngIf="level?.editing != true">
+                <button
+                  class="btn btn-sm btn-primary"
+                  (click)="level.editing = !level.editing"
+                >
+                  <i class="fa fa-pencil"></i> Edit
+                </button>
+                <button
+                  class="btn btn-sm btn-link text-danger"
+                  (click)="RemoveCourseLevel(level)"
+                >
+                  <i class="fa fa-times-circle"></i> Delete
+                </button>
+              </td>
+              <td *ngIf="level?.editing === true" colspan="3">
+                <div class="padding-lg bg-info">
+                  <div class="form-group">
+                    <label for="">Title:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="level.newTitle"
+                    />
+                  </div>
+
+                  <p>
+                    <strong
+                      >Details in each language (displayed in the front
+                      end):</strong
+                    >
+                  </p>
+
+                  <div class="mt-3 mb-3 bg-light p-4">
+                    <div
+                      class="form-group"
+                      *ngFor="
+                        let row of level.details;
+                        let rowInd = index;
+                        trackBy: trackByFn
+                      "
+                    >
+                      <label
+                        >{{ row.language.name }}
+                        <span class="badge badge-info">{{
+                          row.language.abbr
+                        }}</span></label
+                      >
+                      <editor
+                        *ngIf="row.details?.descriptions"
+                        [(ngModel)]="row.details.descriptions"
+                        [init]="tinymceInit"
+                      ></editor>
+
+                      <editor
+                        (init)="row.newDescriptions = ''"
+                        *ngIf="!row.details?.descriptions"
+                        [(ngModel)]="row.newDescriptions"
+                        [init]="tinymceInit"
+                      ></editor>
+                    </div>
+                  </div>
+
+                  <button
+                    class="btn btn-sm btn-success"
+                    (click)="UpdateCourseLevel(level)"
+                  >
+                    <i class="fa fa-save"></i> Update
+                  </button>
+                  <button
+                    class="btn btn-sm btn-default"
+                    (click)="
+                      level.editing = !level.editing; ResetLevelInfo(level)
+                    "
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="courseLevels?.length === 0">
+              <td colspan="4">Noting found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- sorting modal -->
+<ng-template #content let-c="close" let-d="dismiss" id="orderLevelModal">
+  <div class="modal-header">
+    <h4 class="modal-title">Order of Appearance</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="close"
+      (click)="d('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div
+      id="orderLevelModal"
+      *ngIf="courseLevels"
+      appDigcyDraggable
+      (onUpdate)="PrepareArrayForUpdate($event)"
+    >
+      <div
+        *ngFor="let level of courseLevels; let order = index"
+        class="draggable"
+        [attr.id]="level.id"
+      >
+        <i class="fa fa-bars"></i> {{ level.title }}
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="c('save')">
+      Save
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="d('Close click')"
+    >
+      Close
+    </button>
+  </div>
+</ng-template>

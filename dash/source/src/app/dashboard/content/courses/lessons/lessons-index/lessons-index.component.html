@@ -1,0 +1,131 @@
+<div id="working" class="text-center" *ngIf="working">
+  <p><i class="fa fa-spin fa-spinner"></i> working...</p>
+</div>
+<ol class="breadcrumb bg-primary">
+  <!-- <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li>
+  <li class="breadcrumb-item"><a routerLink="/dashboard/content">Content</a></li> -->
+  <!-- <li class="breadcrumb-item"><a routerLink="/dashboard/content/courses">Courses</a></li> -->
+  <li class="breadcrumb-item"><a [routerLink]="['/dashboard/content/courses/details', course.id]">{{course.title}}</a></li>
+  <li class="breadcrumb-item" *ngIf="module"><a [routerLink]="['../../../../module', module.id]">{{ module.title }}</a></li>
+  <li class="breadcrumb-item active" *ngIf="lesson">Lesson: <strong>{{ lesson.title }}</strong></li>
+</ol>
+<!-- filter -->
+<ngb-accordion #acc="ngbAccordion" activeIds="">
+  <ngb-panel id="LessonDetailsSelectionZone">
+    <ng-template ngbPanelTitle>
+      <i class="fa fa-filter"></i> Filter
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <div class="row">
+        <div class="col" id="selection1">
+          <div class="form-group">
+            <label for="select1">Course</label>
+            <select name="" id="select1" class="form-control"></select>
+          </div>
+        </div>
+        <div class="col" id="selection2">
+          <div class="form-group">
+            <label for="select2">Module</label>
+            <select name="" id="select2" class="form-control"></select>
+          </div>
+        </div>
+        <div class="col" id="selection3">
+          <div class="form-group">
+            <label for="select3">Lessons</label>
+            <select name="" id="select3" class="form-control"></select>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>
+<!-- lesson details -->
+<div class="card border-primary" id="LessonDetails" *ngIf="lesson?.title">
+  <div class="card-body">
+    <h5 class="card-title">Details:</h5>
+    <h4 class="card-text has-hidden-elements">{{ lesson.title }} <i *ngIf=" !lesson.active " title="Lesson is not publicly accessible" class="fa fa-eye-slash"></i> <button class="btn btn-link display-on-hover" (click)="OpenEditModal(editModal)"><i class="fa fa-edit"></i></button></h4>
+    <p class="card-text">{{ lesson.description || 'No description added' }}</p>
+  </div>
+</div>
+<br>
+<!-- Excercises and Part Information -->
+<div id="excercises">
+  <div class="card" id="no-execises" *ngIf="!exercises || exercises.length < 1">
+    <div class="card-body">No exercises found</div>
+  </div>
+  <div class="card exercise" *ngFor="let exercise of exercises; let exi = index">
+    <div class="card-body">
+      <div class="form-group">
+        <input type="text" class="form-control
+            input-lg input-lined" placeholder="Exercise Title" maxlength="34" [(ngModel)]="exercise.title" (change)="UpdateExerciseTitle(exercise)" [ngStyle]="{'opacity' : exercise.renaming ? 0.5 : 1}" [disabled]="exercise.renaming">
+        <p class="help-block"><small>Exercise Title must be <= 34 characters.</small> </p> </div> <div class="text-center intel-variations mt-5">
+              <p>Variations for {{ exercise.parts.length }} Intelligences:</p>
+              <div class="intel-variations-list">
+                <a *ngFor="let part of exercise.parts; let pi = index" class="btn btn-sm" [ngClass]="{ 'btn-success' : part.published, 'btn-danger' : !part.published }" [routerLink]="['add_part/', exercise.id, part.id]">{{ pi + 1 }}</a>
+              </div>
+      </div>
+      <div class="row exerciseStatus mt-5">
+        <div class="col">
+          <p>Status: <strong [ngClass]="{'text-danger': !exercise.public, 'text-success' : exercise.public}">{{ exercise.public ? 'PUBLIC' : 'PRIVATE' }}</strong></p>
+        </div>
+        <div class="col">
+          <button class="btn btn-sm btn-success" [disabled]="exercise.public" (click)="UpdateExerciseStatus(exercise, !exercise.public)">Make Public</button>
+          <button class="btn btn-sm btn-warning" [disabled]="!exercise.public" (click)="UpdateExerciseStatus(exercise, !exercise.public)">Make Private</button>
+        </div>
+      </div>
+      <p class="help-block text-center"><small>NOTE: Exercises cannot be made public until all the intellgence varations are published.</small></p>
+    </div>
+    <div class="card-footer">
+      <ul class="list-inline">
+        <li>Actions: </li>
+        <li><button class="btn btn-default btn-xs" (click)="DeleteExercise(exercise.id, exi)"><i class="fa fa-times"></i> Delete Exercise</button></li>
+        <li><button class="btn btn-default btn-xs" (click)="OpenSortingModal(sortingModal)"><i class="fa fa-sort"></i> Change Order</button></li>
+      </ul>
+    </div>
+  </div>
+  <button class="btn btn-lg btn-primary" (click)="AddExercise()"><i class="fa fa-plus"></i> Add Exercise</button>
+  <button class="btn btn-lg btn-default" (click)="OpenSortingModal(sortingModal)" *ngIf="exercises?.length > 1"><i class="fa fa-sort"></i> Change Order</button>
+</div>
+<!-- edit modal -->
+<ng-template #editModal>
+  <div class="modal-header">
+    <h4 class="modal-title">Edit Lesson</h4>
+  </div>
+  <div class="modal-body">
+    <form (submit)="UpdateLesson()">
+      <div class="form-group">
+        <label for="inputLessonTitle">Title</label>
+        <input [(ngModel)]="lesson.newTitle" name="newLessonTitle" type="text" class="form-control" id="inputLessonTitle" placeholder="Insert title">
+      </div>
+      <div class="form-group">
+        <label for="inputLessonActive">Visibility</label>
+        <select [(ngModel)]="lesson.newVisibility" name="newLessonVisibility" class="form-control" id="inputLessonActive">
+          <option value="1" selected>Public</option>
+          <option value="0">Hidden</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="inputLessonDescription">Title</label>
+        <textarea [(ngModel)]="lesson.newDescription" name="inputLessonDescription" rows="5" class="form-control" id="inputLessonDescription" placeholder="Insert description"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger btn-sm" (click)="DeleteLesson()"><i class="fa fa-times-circle"></i> Delete Lesson</button>
+  </div>
+</ng-template>
+<!-- Sorting modal -->
+<ng-template #sortingModal>
+  <div class="modal-header">
+    <h4 class="modal-title">Order Exercises</h4>
+  </div>
+  <div class="modal-body">
+    <div id="ExerciseSorter" appDigcyDraggable (onUpdate)="PreparingExerciseSorting($event)">
+      <div class="ui-state-default p-2 m-1" *ngFor="let exer of exercises; let exer_ind = index" [attr.id]="exer.id"><i class="fa fa-bars"></i> {{ exer.title }}</div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-success" (click)="SaveExerciseSorting()"><i class="fa fa-save"></i> Save Order</button>
+  </div>
+</ng-template>

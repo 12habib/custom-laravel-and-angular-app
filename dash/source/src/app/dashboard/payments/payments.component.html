@@ -1,0 +1,48 @@
+<ol class="breadcrumb bg-primary">
+  <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li>
+  <li class="breadcrumb-item active"><strong>Payments</strong></li>
+</ol>
+  
+<h3 class="page-title">Payments</h3>
+
+<div id="paymentListPage" class="mt-3">
+
+  <table datatable [dtOptions]="dtOptions" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Date-time</th>
+        <th width="300">User</th>
+        <th class="text-center">Amount</th>
+        <th class="text-center">Gateway</th>
+        <th>Payment Data</th>
+        <th>Module</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let payment of payments">
+        <td>{{ payment.created_at }}</td>
+        <td>{{ payment.user.name }}</td>
+        <td class="text-center">${{ payment.amount }}</td>
+        <td class="text-center">{{ payment.gateway | uppercase }}</td>
+        <td class="text-center">
+          <button class="btn btn-xs btn-info" (click)="payment.showGateWayDetails = !payment.showGateWayDetails">{{ payment.showGateWayDetails == true? 'Hide' : 'Show' }}</button> 
+          <div *ngIf="payment.showGateWayDetails == true" class="paymentGateWayDetails">
+            <div class="gateway_data_zone border-info mt-2">
+              <pre>
+                {{ payment.gateway_data | json }}
+              </pre>
+            </div>
+          </div>
+        </td>
+        <td>
+          {{payment.module.title}}
+          <!-- <a [routerLink]="['view', payment.id]" class="btn btn-primary">Details</a> -->
+        </td>
+      </tr>
+      <tr *ngIf="payments?.length == 0">
+        <td colspan="5" class="no-data-available">No data!</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

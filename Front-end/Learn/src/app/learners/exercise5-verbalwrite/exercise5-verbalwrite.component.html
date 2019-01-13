@@ -1,0 +1,72 @@
+<div class="breadcom purpel-bg">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <a class="navbar-brand" routerLink="/lesson">
+          <mdb-icon icon="arrow-left"></mdb-icon> Lesson 5
+        </a>
+      </div>
+      <div class="col-md-6 text-right">
+        <span class="verbalcss">Verbal Writing</span><img src="assets/img/Verbal Writing.png" class="" alt="">
+      </div>
+    </div>
+  </div>
+</div>
+<p class="pborder"><b>Fill in the blanks</b></p>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-12 mt-5">
+      <p>Complete the below sentences with the correct block </p>
+    </div>
+  </div>
+</div>
+<div class="pborder">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
+        <p> <button class="btn colorbox"></button><span class="parasize">Past Simple Verb</span></p>
+        <p> <button class="btn colorbox1"></button><span class="parasize">Auxiliary Verb</span></p>
+        <p> <button class="btn colorbox2"></button><span class="parasize">Past participle</span></p>
+      </div>
+    </div>
+  </div>
+</div>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-lg-8 offset-lg-2  col-12 mt-5 mb-5">
+        <div class="question">
+          <p>
+            <ng-container *ngFor="let questi of questions">
+              <span *ngIf="questi.type==='fixed'">
+                {{questi.text}}
+              </span>
+              <span *ngIf="questi.type==='movable'">
+                <span class=" box-fill1" appFillInTheBlanksDrop (blockDrop)="blanksDrop($event)" [attr.id]="questi.text"></span>
+              </span>
+            </ng-container>
+          </p>
+        </div>
+        <div class="answerblock mt-2">
+          <p class="text-center">
+            <ng-container *ngFor="let questi of questions">
+              <ng-container *ngIf="questi.type==='movable'">
+                <span *ngIf="questi.text==='Past Simple Verb'">
+                  <span class="colorbox" [attr.id]="questi.text" appFillInTheBlanksDrag></span>
+                </span>
+                <span *ngIf="questi.text==='Auxiliary Verb'">
+                  <span class="colorbox1" [attr.id]="questi.text" appFillInTheBlanksDrag></span>
+                </span>
+                <span *ngIf="questi.text==='Past participle'">
+                  <span class="colorbox2" [attr.id]="questi.text" appFillInTheBlanksDrag></span>
+                </span>
+              </ng-container>
+            </ng-container>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="breadcom purpel-bg  ">
+</div>

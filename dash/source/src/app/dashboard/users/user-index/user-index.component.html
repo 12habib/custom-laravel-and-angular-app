@@ -1,0 +1,36 @@
+<!-- <ol class="breadcrumb bg-primary">
+  <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li>
+  <li class="breadcrumb-item active">Users List</li>
+</ol> -->
+
+<table datatable [dtOptions]="dtOptions" class="table table-bordered">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th width="300">Name</th>
+      <th>Email</th>
+      <th>Type</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.id }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.email }}</td>
+      <td>
+        <span *ngIf="user.user_type == 104">Admin</span>
+        <span *ngIf="user.user_type == 1">User</span>
+        <span *ngIf="user.user_type == 2">Editor</span>
+      </td>
+      <td>{{ user.active }}</td>
+      <td>
+        <a [routerLink]="['view', user.id]" class="btn btn-primary">Details</a>
+      </td>
+    </tr>
+    <tr *ngIf="users?.length == 0">
+      <td colspan="5" class="no-data-available">No data!</td>
+    </tr>
+  </tbody>
+</table>

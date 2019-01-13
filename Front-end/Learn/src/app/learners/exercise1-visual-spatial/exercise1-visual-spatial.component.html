@@ -1,0 +1,51 @@
+<div class="breadcom purpel-bg">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+      <a class="navbar-brand" routerLink="/lesson"><mdb-icon icon="arrow-left"></mdb-icon>  Lesson 5</a>
+    </div>
+    <div class="col-md-6 text-right">
+        <span class="verbalcss">Visual/Spatial</span><img src="assets/img/Logical.png" class="" alt="">
+      </div>
+  </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="text-center mt-3">
+          <h5>Look at the conversation below</h5>
+          <img src="assets/img/sms.JPG" alt="" height="500px">
+      </div>
+      <div class="text-center">
+          <img src="assets/img/Emoji.png" alt="">
+          <p>Have you ever felt like this and used this emoji?</p>
+        </div>
+        <form>
+           <div class="md-form">
+                <p>Below are some common expressions related to embarrassment.what do you think they mean?</p>
+                <div class=" mt-5 pb-3">
+                  <p class="text-center">“Red in the face”</p>
+                  <input mdbInputDirective type="text" (keyup)="checkform()" name="input1" [(ngModel)]="input1" id="form1" class="form-control">
+                </div>
+                <div class=" mt-5 pb-3">
+                    <p class="text-center">“His face is redder than a smacked bum”</p>
+                    <input mdbInputDirective type="text"  (keyup)="checkform()" name="input2" [(ngModel)]="input2" id="form2" class="form-control">
+                </div>
+                <div class="mt-5 pb-3">
+                    <p class="text-center"> “I wouldn’t be caught dead doing that”</p>
+                    <input mdbInputDirective type="text" (keyup)="checkform()" name="input3" [(ngModel)]="input3" id="form3" class="form-control">
+                </div>
+
+                <div class="pull-right"  *ngIf="!hasError">
+                    <a (click)="checkpage()"  class="float-right mt-1 mb-5 photoiconandtext" >Next</a>
+                </div>
+
+            </div>
+        </form>
+
+
+
+    </div>
+  </div>
+</div>

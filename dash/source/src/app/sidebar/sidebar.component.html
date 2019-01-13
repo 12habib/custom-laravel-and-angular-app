@@ -1,0 +1,90 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <ul class="nav">
+    <li class="nav-item nav-profile">
+      <div class="nav-link d-flex">
+        <div class="profile-image">
+          <img src="assets/images/user-miguel.jpg" alt="image" />
+          <span class="online-status online"></span>
+          <!-- change class online to offline or busy as needed -->
+        </div>
+        <div class="profile-name" *ngIf="userInfo">
+          <p class="name">{{ userInfo.name }}</p>
+          <p class="designation" [ngSwitch]="userInfo.user_type">
+            <span *ngSwitchCase="104">Admin</span>
+            <span *ngSwitchCase="2">Editor</span>
+            <span *ngSwitchCaseDefault>User</span>
+          </p>
+        </div>
+      </div>
+    </li>
+    <!--
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/dashboard" routerLinkActive="isActive">
+          <i class="icon-screen-desktop menu-icon"></i>
+          <span class="menu-title">Dashboard</span>
+          <span class="badge badge-primary badge-pill">1</span>
+        </a>
+      </li>
+    -->
+    <li class="nav-item">
+      <a routerLink="/dashboard/content/courses" class="nav-link">
+        <i class="menu-icon fa fa-book"></i> Content
+      </a>
+      <ul class="nav sub-menu">
+        <li class="nav-item">
+          <a routerLink="/dashboard/content/courses" class="nav-link"
+            >Courses</a
+          >
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        routerLink="/dashboard/payments"
+        routerLinkActive="isActive"
+      >
+        <i class="fa fa-money-bill-wave menu-icon"></i>
+        <span class="menu-title">Payments</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        routerLink="/dashboard/users"
+        routerLinkActive="isActive"
+      >
+        <i class="icon-people menu-icon"></i>
+        <span class="menu-title">Users</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/dashboard/system/intelligences" class="nav-link">
+        <i class="menu-icon icon-wrench"></i>
+        <span class="menu-title">System</span>
+      </a>
+      <ul class="nav sub-menu">
+        <li class="nav-item">
+          <a routerLink="/dashboard/system/intelligences" class="nav-link"
+            >Intelligences</a
+          >
+        </li>
+        <li class="nav-item">
+          <a routerLink="/dashboard/system/course-levels" class="nav-link"
+            >Course Levels</a
+          >
+        </li>
+        <li class="nav-item">
+          <a routerLink="/dashboard/system/languages" class="nav-link"
+            >Languages</a
+          >
+        </li>
+        <li class="nav-item">
+          <a routerLink="/dashboard/system/test-questions" class="nav-link"
+            >Test Questions</a
+          >
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>

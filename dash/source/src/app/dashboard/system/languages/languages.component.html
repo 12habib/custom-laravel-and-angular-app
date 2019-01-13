@@ -1,0 +1,157 @@
+<h3 class="page-title">Manage Languages</h3>
+
+<div class="" id="addIntelZone">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Add Language</h4>
+
+      <form
+        autocomplete="off"
+        class="form-row"
+        action=""
+        (submit)="AddLanguage()"
+      >
+        <div class="col">
+          <input
+            type="text"
+            name="newLanguageTitle"
+            [(ngModel)]="newLanguage.name"
+            required
+            [disabled]="working"
+            id="newLanguageName"
+            class="form-control"
+            placeholder="Insert Name for the Language"
+          />
+        </div>
+        <div class="col">
+          <input
+            type="text"
+            name="newLanguageAbbr"
+            [(ngModel)]="newLanguage.abbr"
+            required
+            [disabled]="working"
+            id="newLanguageAbbr"
+            class="form-control"
+            placeholder="Insert an unique Abbreviation for the Language"
+          />
+        </div>
+        <div class="col">
+          <button [disabled]="working" type="submit" class="btn btn-primary">
+            <i class="fa fa-save"></i> Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<br />
+<div class="" id="IntelListZone">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">List of Languages:</h4>
+
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th width="200">Name</th>
+            <th>Abbreviation</th>
+            <th>Added</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="working">
+          <tr>
+            <td colspan="5">
+              <i class="fa fa-spinner fa-spin"></i> Please wait...
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="!working">
+          <tr
+            *ngFor="
+              let lang of languages;
+              let langInd = index;
+              trackBy: trackByFn
+            "
+            [style.opacity]="lang.working ? 0.5 : 1"
+          >
+            <td>{{ lang.id }}</td>
+            <td>
+              <strong
+                *ngIf="!lang.editing"
+                class="lang-name"
+                (dblClick)="console.log('test')"
+                >{{ lang.name }}</strong
+              >
+              <div *ngIf="lang.editing" class="form-group border-blue">
+                <input
+                  [disabled]="lang?.working === true"
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="lang.name"
+                />
+                <input
+                  [disabled]="lang?.working === true"
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="lang.abbr"
+                />
+                <div class="btn-group btn-group-sm" role="group">
+                  <button
+                    [disabled]="lang?.working === true"
+                    class="btn btn-warning"
+                    (click)="UpdateLanguage(lang)"
+                  >
+                    <i class="fa fa-check"></i>
+                  </button>
+                  <button
+                    [disabled]="lang?.working === true"
+                    class="btn btn-default"
+                    (click)="
+                      lang.editing = !lang.editing; lang.name = lang.name
+                    "
+                  >
+                    <i class="fa fa-times-circle"></i>
+                  </button>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="badge badge-info">{{ lang.abbr }}</span>
+            </td>
+            <td>{{ lang.created_at }}</td>
+            <td>
+              <div ngbDropdown class="d-inline-block">
+                <button
+                  [disabled]="lang?.working === true"
+                  class="btn btn-secondary"
+                  type="button"
+                  [id]="'actionButton-' + lang.id"
+                  ngbDropdownToggle
+                >
+                  Actions
+                </button>
+                <div ngbDropdownMenu>
+                  <a
+                    (click)="lang.editing = !lang.editing"
+                    class="dropdown-item"
+                    >Edit</a
+                  >
+                  <a
+                    class="dropdown-item text-danger"
+                    (click)="RemoveLanguage(lang)"
+                    >Delete</a
+                  >
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="Languages?.length == 0 && !working">
+            <td colspan="5">Nothing Found</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

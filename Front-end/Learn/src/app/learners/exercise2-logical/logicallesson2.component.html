@@ -1,0 +1,58 @@
+<div class="breadcom purpel-bg">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+        <a class="navbar-brand" routerLink="/lesson"><mdb-icon icon="arrow-left"></mdb-icon>  Lesson 5</a>
+      </div>
+      <div class="col-md-6 text-right">
+          <span class="verbalcss">Logical</span><img src="assets/img/Logical.png" class="" alt="">
+        </div>
+    </div>
+    </div>
+  </div>
+  <div class="container">
+      <div class="row">
+        <div class="col-md-10 offset-md-1 mt-5 mb-5">
+          <div class="text-center">
+            <h5>Have you ever been embarrassed at the airport?</h5>
+          </div>
+          <div>
+              <p class="mt-3 ">We’re going to study an embarrassing story at an airport. First, try to remember some vocabulary about airports to help you understand the story.</p>
+          </div>
+
+          <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Word</th>
+                  <th scope="col">Definition</th>
+                  <th scope="col">Sentence Example</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                    <tr *ngFor="let row of tablerowArray; let j=index">
+                        <td >{{questions[j]['vocabulary']}}</td>
+
+                        <td mwlDroppable [ngStyle]="border[j]" (drop)="dropDefinationData($event,j)">{{insert_in_defination_col[j]}}</td>
+
+                        <td mwlDroppable [ngStyle]="border1[j]" (drop)="dropExampleData($event,j)">{{insert_in_Example_col[j]}}</td>
+
+                      </tr>
+
+              </tbody>
+            </table>
+
+        </div>
+        <div class="col-md-10 offset-md-1  text-left mb-5">
+        <div class="d-inline" *ngFor="let dragbutton of dragbuttons; let i=index">
+            <button class="btn2 btnpad btn-primary waves-light" mdbWavesEffect mwlDraggable  [dropData]=" dragbutton">{{ dragbutton}}</button>
+         </div>
+         <div *ngIf="!hasError">
+            <a (click)="checkpage()"  class="float-right mt-1 mb-5 photoiconandtext" >Next</a>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+

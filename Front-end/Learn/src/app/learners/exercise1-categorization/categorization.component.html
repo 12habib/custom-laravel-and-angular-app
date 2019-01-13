@@ -1,0 +1,60 @@
+<div class="breadcom purpel-bg">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+        <a class="navbar-brand" routerLink="/lesson"><mdb-icon icon="arrow-left"></mdb-icon>  Lesson 5</a>
+      </div>
+      <div class="col-md-6 text-right">
+        <span class="verbalcss">Categorization</span><img src="assets/img/Logical.png" class="" alt="">
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="divpstyle">
+      <p><b>The Things People Do....</b></p>
+  </div>
+  <div class="container ">
+
+    <div class="row">
+      <div class="col-md-6 offset-md-3 mt-3">
+        <div class="text-center">
+          <img src="assets/img/Emoji.png" alt="">
+        </div>
+        <div class="text-center mt-5 mb-5">
+          <button type="button" class="btn3 btn-success" mdbWavesEffect>Confused</button>
+          <button type="button" class="btn3 btn-success" mdbWavesEffect>Frightened</button>
+          <button type="button" class="btn3 btn-success" mdbWavesEffect>Embarrassed</button>
+          <button type="button" class="btn3 btn-success" mdbWavesEffect>Red Faced</button>
+      </div>
+
+        <form>
+            <div class="md-form">
+
+                <p>Below are some common expressions related to embarrassment.what do you think they mean?</p>
+                <div class=" mt-5 pb-3">
+                  <p class="text-center">“Red in the face”</p>
+                  <input mdbInputDirective type="text" id="form1" (keyup)="checkform()" name="input1" [(ngModel)]="input1" class="form-control">
+                </div>
+                <div class=" mt-5 pb-3">
+                    <p class="text-center">“His face is redder than a smacked bum”</p>
+                    <input mdbInputDirective type="text" id="form2" (keyup)="checkform()" name="input2" [(ngModel)]="input2" class="form-control">
+                </div>
+                <div class="mt-5 pb-3">
+                    <p class="text-center"> “I wouldn’t be caught dead doing that”</p>
+                    <input mdbInputDirective type="text" id="form3" (keyup)="checkform()" name="input3" [(ngModel)]="input3" class="form-control">
+                </div>
+
+                <div class="pull-right"  *ngIf="!hasError">
+                    <a (click)="checkpage()"  class="float-right mt-1 mb-5 photoiconandtext" >Next</a>
+                </div>
+
+            </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+  <div class="breadcom purpel-bg  ">
+      <div class="container"></div>
+  </div>
+

@@ -1,0 +1,548 @@
+.btnpad1 {
+  padding-right: 0.6rem !important;
+  padding-left: 0.6rem !important;
+  padding-top: 0.2rem !important;
+  padding-bottom: 0.2rem !important;
+  font-size: 20px;
+}
+
+.btn-success1 {
+  background-color: #00c851;
+  color: #fff;
+}
+.h1class {
+  color: #fff;
+  font-size: 25px;
+  font-weight: 400;
+}
+.form1-check-input[type="checkbox"]:checked+label:before,
+label.btn input[type="checkbox"]:checked+label:before {
+  top: 0px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 45px;
+  color: #f00;
+  line-height: 12px;
+  text-align: center;
+  content: "\d7";
+}
+
+.imagegwidth {
+  max-width: 120px;
+}
+
+/* For iphone: */
+@media (min-width: 320px) and (max-width: 480px) {
+  .imagegwidth {
+    max-width: 60px;
+  }
+
+  .col-sm-6 {
+    width: 50%;
+  }
+
+  .card2 {
+    width: 40% !important;
+    border: 1px dashed black;
+    height: 100% !important;
+    padding: 10px !important;
+    margin: 5px !important;
+  }
+
+  .mobilep {
+    font-size: 10px !important;
+  }
+}
+
+/* For ipad: */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .imagegwidth {
+    max-width: 70px;
+  }
+
+  .card2 {
+    width: 100% !important;
+    border: 1px dashed black;
+    height: 100% !important;
+    padding: 25px !important;
+  }
+
+  .mobilep {
+    font-size: 13px !important;
+  }
+}
+
+.form1-check-input[type="checkbox"]+label:before,
+.form-check-input[type="checkbox"]:not(.filled-in)+label:after,
+label.btn input[type="checkbox"]+label:before,
+label.btn input[type="checkbox"]:not(.filled-in)+label:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  transition: 0.2s;
+  margin-left: 17px;
+}
+
+.form1-check-label {
+  margin-bottom: 0;
+  margin-left: 35px;
+}
+
+.btn1 {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  padding: 0.84rem 2.14rem;
+  font-size: 0.81rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  margin: 0.375rem;
+  border: 0;
+  border-radius: 0.125rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  white-space: normal;
+  word-wrap: break-word;
+  color: #fff;
+}
+
+/* You can add global styles to this file, and also import other style files */
+.card1 {
+  width: 100%;
+  border: 1px dashed black;
+  height: 100%;
+  padding: 20px;
+}
+
+.btn12-success {
+  background-color: #70ad47;
+}
+
+.card1,
+p {
+  margin: 0px !important;
+}
+
+.pad {
+  padding: 0px !important;
+}
+
+.pos {
+  position: fixed !important;
+  top: 10%;
+}
+
+.btnpad {
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+.imgheight {
+  height: 209px;
+}
+
+#overlay {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 20%;
+  right: 0px;
+  background-color: #fff;
+}
+
+.verbalcss {
+  color: #fff;
+}
+
+#overlay1 {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 19%;
+  right: 0px;
+  background-color: #fff;
+}
+
+.rob {
+  width: 150px;
+}
+
+.close {
+  top: 5px;
+}
+
+.shadowimg {
+  position: relative;
+  height: 10px;
+  background: radial-gradient(45px at 50% 50%,
+    rgb(45, 38, 38) 0%,
+    rgba(103, 60, 60, 0) 100%);
+}
+
+.brd {
+  border-bottom: 1.5px solid #70ad47;
+  margin: 2px;
+  width: 25px;
+  display: inline-block;
+}
+
+.card2 {
+  width: 100%;
+  border: 1px dashed black;
+  height: 100%;
+  padding: 35px;
+}
+
+.fill_blanks {
+  min-width: 150px;
+  display: inline-block;
+}
+
+.spansuccess {
+  color: #fff;
+  font-size: 10px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  background: green;
+  border-radius: 10px;
+}
+
+.spanfailed {
+  color: #fff;
+  font-size: 10px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  background: red;
+  border-radius: 10px;
+}
+
+.borderDropStyle {
+  width: 10%;
+  border: 1px dashed #70ad47;
+  height: 30px;
+  display: inline-block;
+  margin-top: 1%;
+  margin-left: 1%;
+}
+
+.btn-highlights {
+  width: 150px;
+  white-space: pre-line;
+}
+
+// ex5 verbal-written
+.colored_blanks {
+  .fill_blanks {
+    width: 150px;
+    display: inline-block;
+  }
+
+  .colorbox {
+    width: 70px;
+    height: 36px;
+    background-color: hsl(28, 90%, 54%);
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+      0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 0.125rem;
+  }
+
+  .colorbox1 {
+    width: 70px;
+    height: 36px;
+    background-color: #70ad47;
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+      0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 0.125rem;
+  }
+
+  .colorbox2 {
+    width: 70px;
+    height: 36px;
+    background-color: #f3b71e;
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+      0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 0.125rem;
+  }
+
+  .parasize {
+    font-size: 16px;
+    margin-left: 2%;
+  }
+
+  .pborder {
+    background: #ece9e9;
+    padding: 1.5%;
+  }
+
+  b,
+  strong {
+    font-weight: bold;
+  }
+
+  .removeblock {
+    display: none !important;
+  }
+
+  .box-fill1 {
+    border-bottom: 1px solid #70ad47;
+    border-top: 1px solid white;
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+    margin: 0px 5px 0px 5px;
+    width: 70px;
+    height: 36px;
+    display: inline-block;
+    box-sizing: border-box;
+  }
+
+  .box-fill2 {
+    border-bottom: 1px solid red;
+    border-top: 1px solid white;
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+    margin: 0px 5px 0px 5px;
+    width: 70px;
+    height: 36px;
+    display: inline-block;
+    box-sizing: border-box;
+  }
+
+  .shadow {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+      0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 0.125rem;
+  }
+}
+
+// Ahsan's styles from ex5-hands
+.div_matrix_matching,
+.div_timed_paragraph {
+  .newsbackground {
+    background-image: url("/assets/img/NewspaperBackground.png");
+    background-repeat: no-repeat;
+    background-position: top;
+    z-index: auto;
+    display: table;
+    width: 100%;
+    height: auto;
+    background-size: cover;
+    padding-top: 5%;
+
+    .newspaper {
+      font-size: 0.9em;
+    }
+  }
+
+  .looping_anim {
+    max-width: 50%;
+  }
+
+  .mtul {
+    margin-top: 22%;
+    list-style: none;
+    padding-left: 0;
+  }
+
+  @media (min-width: 321px) and (max-width: 480px) {
+    .mtul {
+      margin-top: 29%;
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .newspaper {
+      // margin-top: 30% !important;
+      padding: 5%;
+      text-align: justify;
+    }
+
+    .divbutton {
+      padding: 10px !important;
+      width: 100%;
+      font-size: 14px;
+    }
+
+    .successBorder {
+      border: 1px dashed green;
+      padding: 5px;
+      text-align: center;
+      box-sizing: border-box;
+      margin-top: 15px;
+    }
+
+    .dropBorder {
+      border: 1px dashed black;
+      margin-top: 10px;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+  }
+
+  @media (min-width: 320px) and (max-width: 358px) {
+    .mtul {
+      margin-top: 29%;
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .newspaper {
+      // margin-top: 45% !important;
+      padding: 5%;
+      text-align: justify;
+    }
+
+    .divbutton {
+      padding: 7px !important;
+      width: 100%;
+      font-size: 14px;
+    }
+
+    .dropBorder {
+      border: 1px dashed black;
+      padding: 15px !important;
+      margin-top: 15px;
+    }
+
+    .successBorder {
+      border: 1px dashed green;
+      padding: 3px;
+      text-align: center;
+      margin-top: 15px;
+    }
+  }
+
+  @media (min-width: 359px) and (max-width: 375px) {
+    .mtul {
+      margin-top: 29%;
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .newspaper {
+      // margin-top: 40% !important;
+      padding: 5%;
+      text-align: justify;
+    }
+
+    .divbutton {
+      padding: 10px !important;
+      width: 100%;
+      font-size: 14px;
+    }
+
+    .dropBorder {
+      border: 1px dashed black;
+      padding: 15px !important;
+      margin-top: 15px;
+    }
+
+    .successBorder {
+      border: 1px dashed green;
+      padding: 3px;
+      text-align: center;
+      margin-top: 15px;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .mtul {
+      margin-top: 25%;
+      list-style: none;
+      padding-left: 0;
+    }
+  }
+
+  .btn2 {
+    vertical-align: top;
+  }
+
+  .disableBack {
+    background-color: grey !important;
+  }
+
+  .marpadnewspaper {
+    margin-top: 21%;
+    padding-bottom: 20%;
+    text-align: justify;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-top: 3%;
+  }
+
+  @media (min-width: 320px) and (max-width: 480px) {
+    .typeh {
+      font-size: 15px;
+    }
+  }
+
+  .dropBorder {
+    border: 1px dashed black;
+    padding: 25px;
+    margin-top: 15px;
+  }
+
+  .divbutton {
+    padding: 15px;
+  }
+
+  .pos {
+    position: relative;
+    left: 0px !important;
+    top: 0px !important;
+  }
+
+  .marpadnewspaper2 {
+    margin-top: 21%;
+    padding-bottom: 3%;
+    text-align: justify;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-top: 3%;
+  }
+
+  .btn-custom {
+    background: #0b51c5;
+    color: white !important;
+  }
+
+  .invisible {
+    display: none !important;
+  }
+
+  .successBorder {
+    border: 1px dashed green;
+    padding: 13px;
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  .errorBorder {
+    border: 1px dashed red;
+  }
+
+  .newspaper {
+    // margin-top: 18%;
+    padding: 5%;
+    text-align: justify;
+  }
+}

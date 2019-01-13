@@ -1,0 +1,34 @@
+<div class="breadcom purpel-bg">
+    <div class="container-fluid"><a class="menu-close" href="">Lesson Details</a></div>
+</div>
+<div class="container">
+  <div class="row  mt-4" >
+      <ng-container *ngFor="let part of lessonparts">
+        <div class="col-md-6 col-sm-12 mb-3 ">
+          <div class="container mediabodybackcolor">
+            <div class="row ">
+              <div class="col-md-4 pad col-sm-12">
+                <img src="http://via.placeholder.com/160x130" alt="">
+              </div>
+              <div class="col-md-8 col-sm-12 pad">
+                <h5 class="pt-3 ml-4"> {{part.intelligence.title}} </h5>
+                <P class="paracss ml-4">{{part.part_title}}</P>
+                <div class=" ml-3 borderspace"></div>
+                <div class="row mt-3">
+                  <div class="col-md-6">
+                      <a  (click)="navigate(part)" ><p class="text-center textbuttoncss">START</p></a>
+                  </div>
+                  <div class="col-md-6">
+                      <a  routerLink="/dashboard/free-lesson"> <p class="text-center textbuttoncss">REVIEW</p></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+  </div>
+</div>
+
+
+

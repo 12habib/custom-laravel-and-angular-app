@@ -1,0 +1,46 @@
+<div class="breadcom purpel-bg">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+      <a class="navbar-brand" routerLink="/lesson"><mdb-icon icon="arrow-left"></mdb-icon>  Lesson 5</a>
+    </div>
+    <div class="col-md-6 text-right">
+      <span class="verbalcss">Hands</span><img src="assets/img/Hands.png" class="" alt="">
+    </div>
+  </div>
+  </div>
+</div>
+<div class="divpstyle">
+    <p><b>Match the vocabulary to the correct definition.</b></p>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 ">
+  <div class="row">
+
+    <div class="col-md-4 offset-md-4 mt-4">
+      <p>To get your boarding passes (tickets) and check your luggage</p>
+        <div class=" divborder pt-3 pb-3" mwlDroppable [ngStyle]="dropstyle2"  (drop)="dropDataend($event)">
+
+              <p >{{dropsuc}}</p>
+        </div>
+  </div>
+</div>
+  <div class="row mt-5 mb-5 ">
+  <div class="col-md-6 offset-md-3  ">
+        <div class="d-inline text-center" *ngFor="let question of questions; let i=index" >
+            <a  class="btn2 btnpad btn-success1 waves-light"   mdbWavesEffect [mwlDraggable]="disable[i]"  [ngStyle]="dropstyle[i]" [dropData]="question">{{question}}</a>
+        </div>
+        <div class="mt-5" *ngIf="!hasError">
+            <a (click)="checkpage()"  class="float-right mt-1 mb-5 photoiconandtext" >Next</a>
+        </div>
+
+    </div>
+
+  </div>
+
+  </div>
+</div>
+</div>
+
+

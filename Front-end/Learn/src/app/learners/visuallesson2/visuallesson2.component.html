@@ -1,0 +1,44 @@
+<div class="breadcom purpel-bg">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+        <a class="navbar-brand" routerLink="/lesson"><mdb-icon icon="arrow-left"></mdb-icon>  Lesson 5</a>
+      </div>
+      <div class="col-md-6 text-right">
+          <span class="verbalcss">Visual/Spatial</span><img src="assets/img/Logical.png" class="" alt="">
+        </div>
+    </div>
+    </div>
+  </div>
+  <div class="container">
+      <div class="row  mt-5 mb-5">
+        <div class="col-md-8 offset-md-2 ">
+            <div class="row">
+                <img src="assets/img/airplane.png" width="700px" height="500px"alt="">
+            </div>
+
+            <div class="row ml-5"  >
+
+              <div class="mt-3 col-md-3 divborder divbordermar" *ngFor="let answer of ans; let i=index" mwlDroppable [ngStyle]="dropstyle2[i]"  (drop)="dropDataend($event,i)">
+
+                <p >{{dropsuc[i]}}</p>
+            </div>
+
+          </div>
+            <div class="row mt-4">
+
+                <div class="col-md-12 text-center">
+                    <div class="d-inline" *ngFor="let answer of ans; let i=index">
+                        <a href="#" class="btn2 btnpad btn-primary waves-light" mdbWavesEffect mwlDraggable  [ngStyle]="dropstyle[i]" [dropData]="ans[i]">{{ans[i]}}</a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="pull-right"  *ngIf="!hasError">
+                <a (click)="checkpage()"  class="float-right mt-1 mb-5 photoiconandtext" >Next</a>
+            </div>
+
+      </div>
+
+    </div>
+  </div>

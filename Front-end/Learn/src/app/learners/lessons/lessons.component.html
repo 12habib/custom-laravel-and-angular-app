@@ -1,0 +1,233 @@
+<div class="breadcom purpel-bg">
+  <div class="container-fluid">
+    <div class="menu-close tit ml-3">My Lessons</div>
+  </div>
+</div>
+
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card card-body lessoncard">
+        <h4 class="card-title">BEGINNER - MODULE 1</h4>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-2">
+              <h1 class="pertextshadow">26%</h1>
+              <p class="percss">complete</p>
+            </div>
+            <div class="col-md-8">
+              <div class="progress mt-4">
+                <div
+                  class="progress-bar progressbarback"
+                  role="progressbar"
+                  style="width: 26%"
+                  aria-valuenow="25"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="answerstatistics">
+                <h5>52 <span class="spanfontsize">answered</span></h5>
+              </div>
+              <div class="answerdivider mb-1"></div>
+              <div class="answerstatistics ">
+                <h5>202 <span class="spanfontsize">total</span></h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lessons -->
+  <h3 class="mt-5">Lessons</h3>
+  <div class="row  mt-4" *ngIf="Lessons">
+    <ng-container *ngFor="let lesson of Lessons">
+      <div class="col-md-6 col-sm-12 mb-3 ">
+        <div class="container mediabodybackcolor">
+          <div class="row ">
+            <div class="col-md-3 pad col-sm-12">
+              <img
+                src="./assets/img/favicon.png"
+                alt=""
+                class="img-fluid mt-1"
+              />
+            </div>
+            <div class="col-md-9 col-sm-12 pad">
+              <h5 class="pt-3 ml-4">{{ lesson.title }}</h5>
+              <div class=" ml-3 borderspace"></div>
+              <div class="row mt-3">
+                <div class="col-md-6">
+                  <a (click)="navigate(lesson)">
+                    <p class="text-center textbuttoncss">START</p>
+                  </a>
+                </div>
+                <div class="col-md-6">
+                  <!--
+                    <a routerLink="/dashboard/free-module">
+                      <p class="text-center textbuttoncss">REVIEW</p>
+                    </a>
+                  -->
+                  <a> <p class="text-center textbuttoncss">REVIEW</p> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- modules -->
+  <h3 class="mt-5">Modules</h3>
+  <div class="row  mt-4" *ngIf="CourseModules">
+    <ng-container *ngFor="let module of CourseModules">
+      <div class="col-md-6 col-sm-12 mb-3 ">
+        <div class="container mediabodybackcolor">
+          <div class="row ">
+            <div class="col-md-3 pad col-sm-12">
+              <img
+                src="./assets/img/favicon.png"
+                alt=""
+                class="img-fluid mt-1"
+              />
+            </div>
+            <div class="col-md-9 col-sm-12 pad">
+              <h5 class="pt-3 ml-4">{{ module.title }}</h5>
+              <ng-container *ngIf="module?.course?.title">
+                <p class="paracss ml-4">
+                  <strong>Course: {{ module.course.title || "&nbsp;" }}</strong>
+                </p>
+                <!--
+                  <P class="paracss ml-4">{{ module.course.description || '&nbsp;' | slice:0:50 }} </P>
+                -->
+              </ng-container>
+              <p class="paracss ml-4" *ngIf="module.free == true">
+                <small class="badge badge-success">FREE</small>
+              </p>
+              <p class="paracss ml-4" *ngIf="module?.free != true">
+                <small class="badge badge-success">${{ module.price }}</small>
+                &nbsp;
+                <small
+                  *ngIf="module.purchased !== null"
+                  class="badge badge-success"
+                  ><i class="fa fa-check-circle"></i> Purchased</small
+                >
+              </p>
+              <div class=" ml-3 borderspace"></div>
+              <div class="row mt-3">
+                <div class="col-md-6">
+                  <a
+                    (click)="(return)"
+                    *ngIf="
+                      (module.free != true && module.purchased != null) ||
+                      module.free == true
+                    "
+                  >
+                    <p class="text-center textbuttoncss">START</p>
+                  </a>
+                  <a
+                    (click)="OpenPurchaseModal(module, frame)"
+                    *ngIf="module.free != true && module.purchased == null"
+                  >
+                    <p class="text-center textbuttoncss">PURCHASE</p>
+                  </a>
+                </div>
+                <div class="col-md-6">
+                  <!--
+                    <a routerLink="/dashboard/free-module">
+                      <p class="text-center textbuttoncss">REVIEW</p>
+                    </a>
+                  -->
+                  <a
+                    routerLink="/dashboard/free-module"
+                    *ngIf="
+                      (module.free != true && module.purchased != null) ||
+                      module.free == true
+                    "
+                  >
+                    <p class="text-center textbuttoncss">REVIEW</p>
+                  </a>
+                  <a
+                    (click)="navigate(module)"
+                    *ngIf="module.free != true && module.purchased == null"
+                  >
+                    <p class="text-center textbuttoncss">DETAILS</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="row mt-5 mb-5">
+    <div class="col-md-12">
+      <a routerLink="/" mdbWavesEffect>
+        <p class="text-center textbuttoncss">VIEW ALL LESSONS</p>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="breadcom purpel-bg"><div class="container"></div></div>
+
+<!-- module purchase modal -->
+<div
+  mdbModal
+  #frame="mdbModal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+  id="ModulePurchaseModal"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Purchase Module</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="frame.hide()"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover" *ngIf="SelectedModuleForPurchase">
+          <thead>
+            <tr>
+              <th>Module</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <p>{{ SelectedModuleForPurchase.title }}</p>
+                <p>Course: {{ SelectedModuleForPurchase.course?.title }}</p>
+              </td>
+              <td>$ {{ SelectedModuleForPurchase.price }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="row justify-content-center mt-5">
+          <div class="col-8">
+            <ngx-paypal [config]="PayPalConfig"></ngx-paypal>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+</div>
+<!-- /module purchase modal -->

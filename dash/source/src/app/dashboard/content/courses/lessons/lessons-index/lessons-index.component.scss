@@ -1,0 +1,26 @@
+#excercises{
+    border-radius: 2px;
+    box-shadow: 0px 0px 4px rgba(0,0,0,.10);
+    margin-bottom: 30px;
+    padding: 20px 30px;
+    .card {
+        margin-bottom: 30px;
+        margin-top: 30px;
+        max-width: 640px;
+    }
+}
+
+.input-lined{
+    border: none;
+    border-bottom: 1px solid gray;
+    background: white;
+    font-size: 1.20em;
+    padding-left: 0px;
+    color: black;
+}
+.intel-variations-list {
+    
+    .btn + .btn {
+        margin-left: 5px;
+    }
+}

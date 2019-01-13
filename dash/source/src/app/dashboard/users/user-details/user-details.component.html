@@ -1,0 +1,83 @@
+<ol class="breadcrumb bg-primary">
+  <!-- <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li> -->
+  <li class="breadcrumb-item"><a routerLink="/dashboard/users">Users</a></li>
+  <li *ngIf="userInfo" class="breadcrumb-item active">User Details: <strong>{{ userInfo.name }}</strong></li>
+</ol>
+
+<div class="row" *ngIf="userInfo">
+  <div class="col-md-3">
+    <div class="card text-center" id="userNameTypePicActions">
+      <img class="card-img-top" src="assets/images/generic-user-purple.png" alt="">
+      <div class="card-body">
+        <h4 class="card-title">{{ userInfo.name }}</h4>
+        <p class="card-text" [ngSwitch]="userInfo.user_type">
+          <span *ngSwitchCase="104">Admin</span>
+          <span *ngSwitchCase="2">Editor</span>
+          <span *ngSwitchDefault>User</span>
+        </p>
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
+            Actions
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownMenuButton2">
+            <a class="dropdown-item" [routerLink]="['/dashboard/users/edit', userInfo.id]">Edit</a>
+            <a class="dropdown-item text-danger" href="#" (click)="Delete(userInfo.id)">Delete</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <div class="card" id="userInfo">
+      <div class="card-body">
+        <h4 class="card-title">Details:</h4>
+        <table class="table table-condensed">
+          <tbody>
+            <tr>
+              <th>Name</th>
+              <th>{{ userInfo.name }}</th>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <th>{{ userInfo.email }}</th>
+            </tr>
+            <tr>
+              <th>Permissions</th>
+              <th [ngSwitch]="userInfo.user_type">
+                <ul *ngSwitchCase="104">
+                  <li>Add/Edit/Delete Users</li>
+                  <li>Change Settings</li>
+                  <li>Manage Content</li>
+                </ul>
+                <ul *ngSwitchCase="2">
+                  <li>Manage Content</li>
+                  <li>Change own profile settings</li>
+                </ul>
+                <ul *ngSwitchDefault>
+                  <li>Change own profile settings</li>
+                  <li>Purchase Content</li>
+                </ul>
+              </th>
+            </tr>
+            <tr>
+              <th>Status</th>
+              <th [ngSwitch]="userInfo.active">
+                <span *ngSwitchCase="1" class="text-success">Active</span>
+                <span *ngSwitchDefault class="text-danger">Inactive</span>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card" id="userPurchases">
+      
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Purchases:</h4>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

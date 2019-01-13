@@ -1,0 +1,29 @@
+<div class="breadcom purpel-bg">
+
+</div>
+
+<div id="container">
+  <div class="row justify-content-center">
+    <div class="col-4 mt-5 text-center" *ngIf="working">
+      <h2 class="">Please wait...</h2>
+      <div id="outer-circle" class="mt-5 mb-5">
+        <div id="inner-circle">
+          <div id="center-circle">
+            <div id="content"></div>
+          </div>
+        </div>
+      </div>
+      <p><em>Logging you in...</em></p>
+    </div>
+  </div>
+
+  <!-- invalid token -->
+  <!-- show 404 -->
+
+  <div class="text-center" *ngIf=" !working && !isTokenValid">
+    <h2>404</h2>
+    <h4>Not found</h4>
+  </div>
+
+  <!-- ask for name if the token is valid -->
+</div>

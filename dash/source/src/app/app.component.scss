@@ -1,0 +1,68 @@
+@import '../styles';
+
+
+:host {
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+    font-size: 1rem;
+    font-family: 'roboto-regular', sans-serif;
+}
+
+
+
+.padding-sm{
+    padding: 10px;
+}
+.padding-md{
+    padding: 20px;
+}
+.padding-lg{
+    padding: 30px;
+}
+.clickable{
+    cursor: pointer;
+}
+.border-radius {
+    border-radius: 4px;
+}
+.spacer{
+    margin-bottom: 30px;
+}
+.has-hidden-elements {
+    .display-on-hover {
+        visibility: hidden;
+    }
+    &:hover > .display-on-hover {
+        visibility: visible;
+    }
+    &:click > .display-on-hover {
+        visibility: visible;
+    }
+}
+
+
+
+#working {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 9999;
+    p {
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 3em;
+        padding-top: 20rem;
+    }
+}
+.list-inline {
+    li{
+        display: inline;
+    }
+}
+.mce-notification-warning {
+    display: none !important;
+}

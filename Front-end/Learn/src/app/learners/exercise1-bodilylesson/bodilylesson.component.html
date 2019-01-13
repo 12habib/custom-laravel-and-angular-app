@@ -1,0 +1,64 @@
+<div class="breadcom purpel-bg">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+      <a class="navbar-brand" routerLink="/lesson"><mdb-icon icon="arrow-left"></mdb-icon> Demo Lesson</a>
+    </div>
+    <div class="col-md-6 text-right">
+      <span class="verbalcss">Bodily</span><img src="assets/img/Bodily.png" class="" alt="">
+    </div>
+  </div>
+  </div>
+</div>
+<div class="divpstyle">
+    <p><b>The Things People Do....</b></p>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3 mt-3">
+      <div class="text-center">
+        <img src="assets/img/Emoji.png" alt="">
+      </div>
+      <form>
+          <div class="md-form">
+              <input mdbInputDirective type="text" (keyup)="checkform()" name="input1" id="form1" [(ngModel)]="input1" class="form-control">
+              <label for="form1" class="">What is this picture?</label>
+          </div>
+          <div class="md-form">
+              <input mdbInputDirective type="text" (keyup)="checkform()" name="input2" id="form2"[(ngModel)]="input2" class="form-control">
+              <label for="form2" class="">What is it usefor?</label>
+          </div>
+          <div class="md-form">
+              <p >Try and copy this face. <span (click)="photoInput.click()" class="mt-3 photoiconandtext">Take a Photo.<mdb-icon icon="camera" size="lg"></mdb-icon></span></p>
+              <input id="hidefileinput" type="file" name="input3" (blur)="checkform()" [(ngModel)]="input3" #photoInput >
+              <p>Below are some common expressions related to embarrassment.what do you think they mean?</p>
+              <div class=" mt-5 pb-3">
+                <p class="text-center">“Red in the face”</p>
+                <input mdbInputDirective type="text" (keyup)="checkform()" name="input4" [(ngModel)]="input4" id="form4" class="form-control">
+              </div>
+              <div class=" mt-5 pb-3">
+                  <p class="text-center">“His face is redder than a smacked bum”</p>
+                  <input mdbInputDirective type="text" (keyup)="checkform()" id="form5" name="input5" [(ngModel)]="input5" class="form-control">
+              </div>
+              <div class="mt-5 pb-3">
+                  <p class="text-center"> “I wouldn’t be caught dead doing that”</p>
+                  <input mdbInputDirective type="text" (keyup)="checkform()" id="form6" name="input6" [(ngModel)]="input6" class="form-control">
+              </div>
+              <div>
+                  <p >Look at your phone. Do you have any pictures with a face redder than a smacked bum? <span class="mt-3 photoiconandtext" (click)="photoInput1.click()">Add a Photo.<mdb-icon icon="camera" size="lg"></mdb-icon></span></p>
+                  <input id="hidefileinput" (keyup)="checkform()" type="file" name="input7" [(ngModel)]="input7" #photoInput1 >
+              </div>
+              <div *ngIf="!hasError">
+                  <a (click)="checkpage()"  class="float-right mt-1 mb-5 photoiconandtext" >Next</a>
+
+              </div>
+
+          </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+<div class="breadcom purpel-bg  ">
+    <div class="container"></div>
+</div>

@@ -1,0 +1,36 @@
+<div class="breadcom purpel-bg">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <a class="navbar-brand" routerLink="/lesson">
+          <mdb-icon icon="arrow-left"></mdb-icon> Lesson 5
+        </a>
+      </div>
+      <div class="col-md-6 text-right">
+        <span class="verbalcss">Visual Spatial</span><img src="assets/img/Verbal Writing.png" class="" alt="">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2 mb-5 mt-5">
+      <h5>
+        <b> Complete the below sentences with the correct block </b>
+      </h5>
+      <ng-container *ngFor="let button of dragbutton; let i=index">
+        <p> <button [ngStyle]="dragbuttonstyle[i]" mdbWavesEffect mwlDraggable [dropData]="button" class="btn hello "></button>
+          = {{button}}
+        </p>
+      </ng-container>
+      <ng-container *ngFor='let question of questions; let i=index'>
+        <p class="md-form" [innerHTML]="question"></p>
+      </ng-container>
+      <div class="pull-right">
+        <a class="float-right mt-1 mb-5 photoiconandtext">Next</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="breadcom purpel-bg  ">
+</div>

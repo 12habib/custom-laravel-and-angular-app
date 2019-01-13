@@ -1,0 +1,61 @@
+<ol class="breadcrumb bg-primary">
+  <!-- <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li> -->
+  <!-- <a class="breadcrumb-item"><a routerLink="/dashboard/content">Content</a></a> -->
+  <li class="breadcrumb-item"><a routerLink="/dashboard/content/course">Courses</a></li>
+  <li class="breadcrumb-item active"><strong>New Course</strong></li>
+</ol>
+
+
+<h3 class="page-title">Start a new Course</h3>
+<hr>
+
+<ngb-alert [dismissible]="false" *ngIf="courseLevels?.length === 0">
+  <strong>No Levels found!</strong>
+  <br>
+  <p>You must set levels for your course in order to get started. The system has detected that you do not have any levels saved yet. Please follow the link below to set some levels, and you can come back to start the course.</p>
+  <a routerLink="/dashboard/system/course-levels" class="btn btn-primary">Manage Course Levels</a>
+</ngb-alert>
+
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card" id="startNewCourse" *ngIf="courseLevels?.length > 0">
+      <div class="card-body">
+        <h4 class="card-title">Start a New Course</h4>
+        
+    
+        <form (submit)="StartCourse()" *ngIf="newCourse">
+    
+          <div class="form-group">
+            <label for="newCourseTitle">Course Title</label>
+            <input 
+              type="text"
+              id="newCourseTitle"
+              name="newCourseTitle"
+              class="form-control form-control-lg"
+              [(ngModel)]="newCourse.title"
+              placeholder="Insert the title for the course"
+              required>
+          </div>
+    
+          <div class="form-group">
+            <label for="newCourseTitle">Course Level</label>
+            <select 
+              id="newCourseLevel"
+              name="newCourseLevel"
+              class="form-control"
+              [(ngModel)]="newCourse.level"
+              required>
+              <option value="">-- select one --</option>
+              <option *ngFor="let level of courseLevels" [value]="level.id">{{ level.title }}</option>
+            </select>
+          </div>
+    
+          <button class="btn btn-lg btn-success" type="submit"><i class="fa fa-save"></i> Start</button>
+          <button class="btn btn-lg btn-link" type='button' (click)="ResetCourseButton()">Reset</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

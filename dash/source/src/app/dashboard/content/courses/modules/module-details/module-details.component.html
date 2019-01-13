@@ -1,0 +1,269 @@
+<div id="working" class="text-center" *ngIf="working">
+  <p><i class="fa fa-spin fa-spinner"></i> working...</p>
+</div>
+
+<ol class="breadcrumb bg-primary">
+  <!--
+    <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li>
+    <li class="breadcrumb-item"><a routerLink="/dashboard/content">Content</a></li>
+  -->
+  <li class="breadcrumb-item">
+    <a routerLink="/dashboard/content/courses">Courses</a>
+  </li>
+  <li class="breadcrumb-item" *ngIf="course">
+    <a [routerLink]="['/dashboard/content/courses/details', course_id]">{{
+      course.title
+    }}</a>
+  </li>
+  <li class="breadcrumb-item active" *ngIf="module">
+    Module: <strong>{{ module.title }}</strong>
+  </li>
+</ol>
+
+<div class="row">
+  <div class="col-3" id="modulesLeftPane" *ngIf="course">
+    <div class="card">
+      <img
+        class="card-img-top"
+        [src]="
+          course.cover_photo_url ||
+          'https://dummyimage.com/300x300/b0b0b0/fff&text=Pic'
+        "
+        alt="Cover Photo"
+      />
+      <div class="card-body">
+        <h4 class="card-title">{{ course.title }}</h4>
+        <p class="card-text">
+          Level: <strong>{{ course.level.title | uppercase }}</strong>
+        </p>
+        <section
+          id="description"
+          class="card-text"
+          [innerHtml]="course.description | safeHtml"
+        ></section>
+
+        <div class="padding-sm">
+          <div class="form-group">
+            <label for="moduleSelection">Module:</label>
+            <select
+              name="selectedModule"
+              [(ngModel)]="module_id"
+              id="moduleSelection"
+              class="form-control"
+              (change)="ChangeModulePage()"
+            >
+              <option *ngFor="let m of course.modules" [value]="m.id"
+                ><span *ngIf="m.id == module_id">-></span> {{ m.title }}
+                <span *ngIf="!m.active">(hidden)</span></option
+              >
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-9" id="modulesRightPane" *ngIf="module">
+    <div class="card">
+      <!-- <img class="card-img-top" src="holder.js/100px180/" alt=""> -->
+      <div class="card-body">
+        <h4 class="card-title has-hidden-elements">
+          <i class="fa fa-exclamation-circle"></i> Module Details:
+          <button
+            class="btn btn-link display-on-hover"
+            (click)="OpenEditModal(editModal)"
+          >
+            <i class="fa fa-edit"></i>
+          </button>
+        </h4>
+
+        <table class="table table-striped" id="moduleInfoTable">
+          <tbody>
+            <tr>
+              <td width="200">Title:</td>
+              <td>
+                <strong>{{ module.title }}</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>Visibility</td>
+              <td>{{ !module.active ? "Hidden" : "Public" }}</td>
+            </tr>
+            <tr>
+              <td>Price</td>
+              <td>{{ module.free ? "Free" : "$" + module.price }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-auto mr-auto">
+              <h4 class="card-title">
+                <i class="fa fa-book"></i> Lessons
+                <span class="badge badge-warning">{{
+                  module.lessons.length
+                }}</span>
+              </h4>
+            </div>
+            <div class="col-auto">
+              <button
+                class="btn btn-primary btn-sm"
+                (click)="OpenNewLessonModal(addLessonModal)"
+              >
+                <i class="fa fa-plus"></i> New Lesson
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <table class="table table-striped">
+          <thead class="thead-light">
+            <tr>
+              <th>ID</th>
+              <th>Title &amp; Description</th>
+              <th>Visibility</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let lesson of module.lessons">
+              <td>{{ lesson.id }}</td>
+              <td>
+                <p>
+                  <strong>{{ lesson.title }}</strong>
+                </p>
+                <article class="description">{{ lesson.description }}</article>
+              </td>
+              <td>{{ lesson.active ? "Public" : "Hidden" }}</td>
+              <td>
+                <a
+                  [routerLink]="['lesson', lesson.id]"
+                  class="btn btn-outline-success"
+                  >Details</a
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #editModal>
+  <div class="modal-header"><h4 class="modal-title">Edit Module</h4></div>
+  <div class="modal-body">
+    <form (submit)="UpdateModule()">
+      <div class="form-group">
+        <label for="inputModuleTitle">Title</label>
+        <input
+          [(ngModel)]="module.newTitle"
+          name="newModuleTitle"
+          type="text"
+          class="form-control"
+          id="inputModuleTitle"
+          placeholder="Insert title"
+        />
+      </div>
+      <div class="form-group">
+        <label for="inputModuleActive">Visibility</label>
+        <select
+          [(ngModel)]="module.newVisibility"
+          name="newModuleVisibility"
+          class="form-control"
+          id="inputModuleActive"
+        >
+          <option value="1" selected>Public</option>
+          <option value="0">Hidden</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="inputModuleFree">Free?</label>
+        <select
+          [(ngModel)]="module.newFree"
+          name="newModuleFree"
+          class="form-control"
+          id="newModuleFree"
+        >
+          <option value="1" selected>Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+
+      <div class="form-group" *ngIf="module.newFree != true">
+        <label for="inputModulePrice">Price (in USD)</label>
+        <input
+          type="number"
+          min="1"
+          [(ngModel)]="module.newPrice"
+          name="newModulePrice"
+          class="form-control"
+          id="newModulePrice"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary">
+        <i class="fa fa-save"></i> Save
+      </button>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger btn-sm" (click)="DeleteModule()">
+      <i class="fa fa-times-circle"></i> Delete Module
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #addLessonModal>
+  <div class="modal-header"><h4 class="modal-title">New Lesson</h4></div>
+  <div class="modal-body">
+    <form (submit)="AddLesson()" autocomplete="off">
+      <div class="form-group">
+        <label for="inputLessonTitle">Title</label>
+        <input
+          [(ngModel)]="newLesson.title"
+          name="newLessonTitle"
+          type="text"
+          class="form-control"
+          id="inputLessonTitle"
+          placeholder="Insert title"
+        />
+      </div>
+      <div class="form-group">
+        <label for="inputLessonDescription">Title</label>
+        <textarea
+          [(ngModel)]="newLesson.description"
+          name="newLessonDescription"
+          rows="10"
+          class="form-control"
+          id="inputLessonDescription"
+          placeholder="Insert Description"
+        >
+        </textarea>
+      </div>
+      <div class="form-group">
+        <label for="inputLessonActive">Visibility</label>
+        <select
+          [(ngModel)]="newLesson.visibility"
+          name="newLessonVisibility"
+          class="form-control"
+          id="inputLessonActive"
+        >
+          <option value="1" selected>Public</option>
+          <option value="0">Hidden</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary">
+        <i class="fa fa-save"></i> Save
+      </button>
+    </form>
+  </div>
+</ng-template>

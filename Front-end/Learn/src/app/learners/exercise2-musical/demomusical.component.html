@@ -1,0 +1,56 @@
+<div class="breadcom purpel-bg">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+      <a class="navbar-brand" routerLink="/lesson"><mdb-icon icon="arrow-left"></mdb-icon> Exercise 2 Musical</a>
+    </div>
+    <div class="col-md-6 text-right">
+      <span class="verbalcss">Musical</span><img src="assets/img/Hands.png" class="" alt="">
+    </div>
+  </div>
+  </div>
+</div>
+
+  <div class="row mb-5">
+    <div class="col-md-6 offset-md-3 mt-5 mb-5">
+        <div class="text-center">
+            <h5>Have you ever been embarrassed at the airport?</h5>
+          </div>
+          <div  class="text-center">
+              <p class="mt-3 ">We’re going to study an embarrassing story at an airport. First, try to remember some vocabulary about airports to help you understand the story.</p>
+          </div>
+
+          <ng-container *ngIf="showTimer">
+            <div class="text-center" *ngIf="!showVocabulary; else closetimer">
+              <p>{{timecalc}} seconds for you to write</p>
+            </div>
+            <ng-template #closetimer>
+              <p class="text-center">It's time to show you The Vocabulary</p>
+            </ng-template>
+        </ng-container>
+          <div class="textareawidth">
+              <textarea (keyup)="checkform()" name="input1" [(ngModel)]="input1" id=""  rows="10"></textarea>
+          </div>
+          <ng-container *ngIf="showVocabulary">
+              <div class="mt-3" *ngFor="let question of questions; let i=index">
+                  <div>
+                    <p><b>{{question.vocabulary}} :</b><span> {{ question.text}}</span></p>
+                  </div>
+              </div>
+          </ng-container>
+
+
+          <div *ngIf="!hasError">
+              <a (click)="checkpage()"  class="float-right mt-1 mb-5 photoiconandtext" >Next</a>
+
+          </div>
+    </div>
+  </div>
+
+
+<div class="breadcom purpel-bg  mt-5">
+    <div class="container"></div>
+</div>
+
+
+

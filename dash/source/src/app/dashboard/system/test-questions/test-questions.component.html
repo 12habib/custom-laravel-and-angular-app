@@ -1,0 +1,125 @@
+<!-- <ol class="breadcrumb bg-primary">
+  <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li>
+  <li class="breadcrumb-item"><a routerLink="/dashboard/system">System</a></li>
+  <li class="breadcrumb-item active"><strong>Test Questions</strong></li>
+</ol> -->
+<br>
+<h3 class="page-title">Assessment Test Questions</h3>
+<hr>
+<button class="btn btn-primary" (click)="ShowAddModal(addModalContent)"><i class="fa fa-plus"></i> Add Question</button>
+<!-- <button class="btn btn-primary"><i class="fa fa-wrench"></i> Test Settings</button> -->
+<button class="btn btn-primary" (click)="ngOnInit()"><i class="fa fa-refresh"></i>
+  Reload List</button>
+<div id="questionListZone">
+  <div class="card" *ngFor="let group of questions; let groupIndex= index">
+    <div class="card-body">
+      <h4 class="card-title">{{ group.intelligence_title }}</h4>
+        <p *ngIf="group.questions?.length < 4">
+          <ngb-alert [dismissible]="false">
+            Every intelligence must have 4 test questions.
+          </ngb-alert>
+         </p>
+      <table class="table table-striped table-hover table-mini">
+        <thead>
+          <tr>
+            <th class="text-center">Sl.</th>
+            <th width="80%">Question</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="3" *ngIf="group.questions?.length === 0">Nothing found.
+              Please add some.</td>
+          </tr>
+        
+          <tr *ngFor="let question of group.questions; let i= index" [attr.data]="i">
+            <td class="text-center"> {{ i + 1 }} </td>
+            <td>
+              <article [innerHTML]="question.body | safeHtml"></article>
+            </td>
+            <td>
+              <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-block btn-outline-primary" [id]="'questionAction-' + question.id" ngbDropdownToggle>
+                  Actions </button>
+                <div ngbDropdownMenu [attr.aria-labelledby]="'questionAction-' +
+                  question.id">
+                  <button class="dropdown-item" (click)="ShowEditModal(editModalContent, groupIndex, i)"><i class="fa fa-pencil"></i> Edit</button>
+                  <button class="dropdown-item" (click)="DeleteQuestion(groupIndex, i)"><i class="fa
+                      fa-times-circle"></i>
+                    Delete</button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- edit modal -->
+<ng-template #editModalContent let-cEdit="close" let-dEdit="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Edit Question</h4>
+    <button type="button" class="close" aria-label="Close" (click)="dEdit('cross')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form (submit)="UpdateTestQuestion()">
+      <div class="form-group">
+        <label for="body">Test Question:</label>
+        <editor [(ngModel)]="selectedQuestion.body" apiKey="test" [init]="{
+          plugins: 'link' }" [ngModelOptions]="{ standalone: true }">
+        </editor>
+      </div>
+      <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>
+        Save</button>
+    </form>
+  </div>
+</ng-template>
+<!-- Add modal -->
+<ng-template #addModalContent let-cAdd="close" let-dAdd="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Add Question</h4>
+    <button type="button" class="close" aria-label="Close" (click)="dAdd('cross')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form (submit)="AddTestQuestion()">
+      <div class="form-group">
+        <label for="select_intelligence_id">Select Intelligence:</label>
+        <select [(ngModel)]='newTestQuestion.intelligence_id' class="form-control" name="select_intelligence_id" id="select_intelligence_id" required>
+          <option disabled selected>Select an Intelligence</option>
+          <option *ngFor="let intel of intelligences" [value]="intel.id">
+            {{intel.newTitle}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="body">Test Question:</label>
+        <editor [(ngModel)]="newTestQuestion.body" apiKey="test" [init]="{
+          plugins: 'link' }" [ngModelOptions]="{ standalone: true }">
+        </editor>
+      </div>
+      <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>
+        Save</button>
+    </form>
+  </div>
+</ng-template>
+<!-- <ng-template #deleteModalContent let-cDelete="close" let-dDelete="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-delete-title">Delete Question</h4>
+    <button type="button" class="close" aria-label="Close" (click)="dDelete('cross')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form (submit)="DeleteQuestion()">
+      <p>Are you sure? You cannot undo this.</p>
+      <button type="submit" class=" btn btn-danger">
+        Yes</button>
+    </form>
+  </div>
+</ng-template> -->

@@ -1,0 +1,69 @@
+<div class="loading text-center " *ngIf="loading">
+  <div class="mtload">
+    <h2 style="color:#fff">Loading.....</h2>
+    <img src="assets/img/loader.gif" width="40px" height="40px" alt="" />
+  </div>
+</div>
+
+<div id="overolly"></div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="containe-fluid padd-td10">
+    <a id="menu-toggle" class="toggle">
+      <mdb-icon icon="bars"></mdb-icon>
+    </a>
+  </div>
+</nav>
+
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a id="menu-close" class="toggle">
+        <mdb-icon icon="arrow-left"></mdb-icon> Edugami
+      </a>
+    </li>
+    <ng-container *ngIf="!isTokenValid; else: loggedinMenu">
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link waves-light" routerLink="/" mdbWavesEffect><i class="fa fa-home"></i> Home</a>
+      </li>
+    </ng-container>
+    <ng-template #loggedinMenu>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link waves-light" routerLink="/lessons" mdbWavesEffect><i class="fa fa-home"></i> Home</a>
+      </li>
+    </ng-template>
+    <li>
+      <a class="nav-link waves-light" routerLink="/lessons" mdbWavesEffect><i class="fa fa-check-double"></i> My
+        Lessons</a>
+    </li>
+    <li>
+      <a class="nav-link waves-light" (click)="$event.preventDefault()" xrouterLink="/lessons" mdbWavesEffect><i class="fa fa-book-open"></i>
+        Work Completed</a>
+    </li>
+    <!-- <li>
+      <a
+        class="nav-link waves-light"
+        (click)="$event.preventDefault()"
+        xrouterLink="/lessons"
+        mdbWavesEffect
+        ><i class="fa fa-microphone-alt"></i> Pronounciation</a
+      >
+    </li> -->
+
+    <li>
+      <a class="nav-link waves-light" routerLink="/profile" mdbWavesEffect><i class="fa fa-user"></i> My Profile</a>
+    </li>
+
+    <ng-container *ngIf="!isTokenValid; else: logout">
+      <li class="userlogin">
+        <a class="nav-link waves-light xdeep-yellow" routerLink="./login" mdbWavesEffect>Sign In</a>
+        <a class="nav-link waves-light deep-yellow ext-link" href="https://myedugami.com/get-started" mdbWavesEffect>Sign
+          Up</a>
+      </li>
+    </ng-container>
+    <ng-template #logout>
+      <li routerLinkActive="active" class="userlogin">
+        <a class="nav-link waves-light deep-yellow" (click)="logOut()" mdbWavesEffect>Logout</a>
+      </li>
+    </ng-template>
+  </ul>
+</div>

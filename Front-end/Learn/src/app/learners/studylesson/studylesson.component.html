@@ -1,0 +1,318 @@
+<div class="breadcom purpel-bg">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+        <a class="navbar-brand" routerLink="/lesson"><mdb-icon icon="arrow-left"></mdb-icon> Demo Lesson</a>
+      </div>
+      <div class="col-md-6 text-right">
+        <span class="verbalcss">Verbal Writing</span><img src="assets/img/Verbal Writing.png" class="" alt="">
+      </div>
+    </div>
+    </div>
+  </div>
+<div *ngFor="let screen of partData.screens; let screenIndex = index">
+  <div *ngFor="let element of screen.elements; let elemIndex = index">
+    <div [ngSwitch]="element.type">
+        <div *ngSwitchCase="'buildman'">
+        <div class="container mt-5 mb-5" >
+          <p  class="text-center">{{title}}</p>
+          <div class="col-md-4 offset-md-4">
+            <div class="row mb-3 justify-content-center" >
+                  <div class="col-md-6">
+                    <div class="text-center imgheight">
+                      <img src="assets/img/Full Robot.png" class="rob" alt="">
+                      <div id="overlay" [ngStyle]="styleimg">
+
+                      </div>
+                    </div>
+                    <div class="text-center shadowimg">
+                    </div>
+                    <h5 class="text-center">Good robot</h5>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="text-center imgheight">
+                        <img src="assets/img/Full Robot.png" class="rob" alt="">
+                        <div id="overlay1" [ngStyle]="styleimg1">
+
+                        </div>
+                      </div>
+
+                      <div class="text-center shadowimg">
+                      </div>
+                      <h5 class="text-center">Bad robot</h5>
+                    </div>
+                  </div>
+                    <div class="text-center mt-2 ">
+                        <h2>
+                          <ng-container *ngFor="let ans of answer; let i=index">
+                          <span class="brd" [ngStyle]="enterstyle[i]">
+                            {{ans}}
+                          </span>
+                        </ng-container>
+                        </h2>
+                    </div>
+                    <div class="text-center">
+                      <ng-container *ngFor="let ques of question; let i=index" >
+                      <button type="button" [disabled]="disable[i]" (click)="adddata(question[i],i)" class="btn1 btnpad1 btn-success1" [ngStyle]="clickbuttonstyle[i]" mdbWavesEffect>{{ques}}</button>
+                    </ng-container>
+                    </div>
+                    <button type="button" (click)="tryagain()" class="btn1  btn-warning btnpad1" mdbWavesEffect>Try Again</button>
+                    <a (click)="checkpage()"   class="float-right mt-3 " [ngStyle]="linkstyle"><i class="fa address-card" aria-hidden="true"></i>next</a>
+                <div class="modal-dialog text-center pos modal-notify modal-success" *ngIf="displaywrongmodal" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <button type="button" class="close"  >
+                                <span aria-hidden="true" (click)="closewrongmodal()" >×</span>
+                            </button>
+                            <div class="text-center">
+                                <i class="fa fa-close fa-4x mb-3 animated rotateIn"></i>
+                                <p>You have build the bad robot.Don't Worry.Try Again</p>
+                            </div>
+                        </div>
+                    </div>
+              </div>
+              <div class="modal-dialog justify-content-center pos modal-notify modal-success" *ngIf="displaymodal" role="document">
+                  <div class="modal-content">
+                      <div class="modal-body">
+                          <button type="button" class="close"  >
+                              <span aria-hidden="true" (click)="closemodal()" >×</span>
+                          </button>
+                          <div class="text-center">
+                              <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
+                              <p>Congratulatons! You have build the robot successfully</p>
+                          </div>
+                      </div>
+              </div>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div *ngSwitchCase="'audio_simple'">
+          <div class="divpstyle ">
+              <p class="text-center"><b>{{playAudioTitle}}</b></p>
+          </div>
+          <div class="row">
+              <div class="col-md-6 offset-md-3 mt-5 mb-5">
+                    <div class="row">
+                      <ng-container *ngFor="let audio of audios; let i=index">
+                      <div class="col offset-md-3">
+
+                          <div *ngIf="!playingAudio[i]; else pauseButton">
+                              <i class="fa playiconsize fa-play-circle-o fa-3x" (click)="playAudio(i)"></i>
+                            </div>
+
+                            <ng-template #pauseButton>
+                                <i class="fa playiconsize fa-pause-circle-o fa-3x" (click)="pauseAudio(i)"></i>
+                            </ng-template>
+
+
+                      </div>
+                    </ng-container>
+                    </div>
+
+              </div>
+            </div>
+      </div>
+      <div *ngSwitchCase="'fib_simple'">
+          <div class="col-md-6 offset-md-3 text-center mt-5 mb-5">
+
+              <p class="md-form" >
+                <ng-container *ngFor="let fix of fixed; let fixedindex=index">
+                    <span>{{fix}}</span><input  type="text" id="form1" [ngStyle]='formStyle[fixedindex]' (keyup)="check_Diff_ans_from_Form()"  [(ngModel)]="ngmodelarray[fixedindex]" class="form-control fill_blanks">
+
+                </ng-container>
+
+              </p>
+          </div>
+      </div>
+      <div *ngSwitchCase="'hidden_word'">
+          <div class="col-md-6 offset-md-3 text-center mt-5 mb-5">
+            <h6>Hidden word please click to see.</h6>
+            <ng-container *ngIf="!show; else showText ">
+                <button class="btn btn-success" (click)="show_Hidden_word()">{{showButton}}</button>
+            </ng-container>
+             <ng-template #showText>
+                  <h5 >{{hiddenWord}}</h5>
+             </ng-template>
+          </div>
+      </div>
+      <div *ngSwitchCase="'match_sides'">
+          <div class="col-md-6 offset-md-3 text-center mt-5 mb-5">
+            <h6 class="text-center mb-3">{{matchSidesTitle}}</h6>
+              <div class="row mb-3 justify-content-center" *ngFor="let left of leftSideData; let i=index">
+
+                  <div class="col-md-3 col-sm-12 pad">
+
+                      <p >{{left}}</p>
+
+                  </div>
+
+                  <div class="card1 col-md-9 col-sm-12 dropborder " mwlDroppable [ngStyle]="dropStyle2[i]"  (drop)="dropDataend($event,i)">
+                      <p >{{droppedData[i]}}</p>
+                  </div>
+
+              </div>
+              <div class="">
+                  <div class="d-inline" *ngFor="let right of rightSideData; let i=index">
+                    <a  class="btn  btn-primary waves-light" mdbWavesEffect mwlDraggable  [ngStyle]="dropStyle[i]" [dropData]="right">{{right}}</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div *ngSwitchCase="'qa'">
+          <div class="col-md-6 offset-md-3 text-center mt-5 mb-5">
+
+              <p class="md-form" >
+
+                    <span>{{qaTitle}} </span> <input  type="text" id="form1" [ngStyle]='qaStyle' (keyup)="check_Diff_ans_from_Qa()"  [(ngModel)]="qaInput" class="form-control fill_blanks">
+
+
+
+              </p>
+          </div>
+      </div>
+      <div *ngSwitchCase="'reorder_paragraphs'">
+          <div class="divpstyle">
+              <p  class="text-center"><b>Insert text to the box....</b></p>
+          </div>
+          <div class="container ">
+            <div class="row mt-5">
+              <div class="col-md-10 offset-md-1 mt-5">
+
+                  <div class="row mb-5">
+                      <div class="col " *ngIf="!dropComplete">
+                          <div class="d-inline" *ngFor="let question of reorderQuestions; let i=index">
+                              <a  class="btn btnpad btn-primary waves-light" mdbWavesEffect mwlDraggable  [ngStyle]="reorderDropStyle[i]" [dropData]="question">{{question}}</a>
+                            </div>
+
+
+                      </div>
+                      <div class="col divborder" mwlDroppable   [ngStyle]="reorderDropStyle2[i]" (drop)="reOrderParagraphDrop($event)">
+                          <div class="divborder1 mt-2 text-center">
+                              <h2>THE ORCHARD TIMES</h2>
+                            </div>
+                              <p  class="text-left">
+                                <ng-container *ngFor="let drop of reorderDroppedData"> {{drop}}</ng-container>
+
+                              </p>
+
+                      </div>
+                  </div>
+
+
+
+              </div>
+            </div>
+          </div>
+      </div>
+      <div *ngSwitchCase="'reorder_sentence'">
+          <div class="divpstyle">
+              <p class="text-center"><b>Put the sentence back together in order </b></p>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 ">
+            <div class="row">
+
+              <div class="col-md-10 offset-md-1 mt-4">
+                  <div class=" pt-3" >
+
+                        <p class="text-center">
+                            <ng-container  *ngFor="let answer of reorSenAns; let i=index">
+                                <span>{{reorSenQues[i]}}</span><span class=" " mwlDroppable [ngStyle]="reorSenDropStyle2[i]"  (drop)="reOrSenDrop($event)">{{reorSenDroppedData[i]}} </span>
+                            </ng-container>
+
+
+                        </p>
+
+                  </div>
+            </div>
+          </div>
+            <div class="row mt-2 mb-5 ">
+            <div class="col-md-10 offset-md-1 text-center">
+                  <div class="d-inline text-center" *ngFor="let question of reorSenAns; let i=index" >
+                      <a  class="btn btn-primary waves-light"   mdbWavesEffect [mwlDraggable]  [ngStyle]="reorSenDropStyle[i]" [dropData]="question">{{question}}</a>
+                  </div>
+
+
+              </div>
+
+            </div>
+
+            </div>
+          </div>
+          </div>
+    </div>
+    <div *ngSwitchCase="'mcq_horizontal'">
+        <div class="col-md-6 offset-md-3 text-center mt-5 mb-5">
+          <h6>{{mcqhorQues}}</h6>
+          <ng-container *ngFor="let mcq of mcqhorChoice; let i=index">
+            <button type="button" [ngStyle]='mcqverStyle[i]' (click)="checkAnswer(i)" class="btn3 btn12-success" mdbWavesEffect>{{mcq.text}}</button>
+          </ng-container>
+          </div>
+    </div>
+    <div *ngSwitchCase="'paragraph'">
+        <h6 class="text-center">Paragraph Element</h6>
+        <div class="col-md-6 offset-md-3  mt-5 mb-5" [innerHTML]="paraGraph">
+
+        </div>
+    </div>
+    <div *ngSwitchCase="'write_from_memory'">
+        <div class="col-md-6 offset-md-3  mt-5 mb-5">
+          <h6 class="text-center">{{memTitle}} </h6>
+          <ng-container *ngFor="let meml of memAns; let j= index">
+            <div class="md-form">
+              <input  type="text" id="form{{j}}" [ngStyle]='memStyle[j]' (keyup)="checkLines(j)"  [(ngModel)]="lineModelArray[j]" class="form-control ">
+
+            </div>
+
+          </ng-container>
+          <!-- <textarea class="form-control" [ngStyle]="memStyle" (keyup.enter)="checkLines($event)" [(ngModel)]="memLineInput" name="" id="" cols="30" rows="10"></textarea> -->
+
+        </div>
+    </div>
+    <div *ngSwitchCase="'mcq_vertical'">
+        <div class="col-md-6 offset-md-3  mt-5 mb-5">
+          <h6>
+            {{mcqverQues}}
+          </h6>
+          <div class="form-check " *ngFor="let mcqv of mcqverChoice; let j= index">
+            <input class="form-check-input" [(ngModel)]="mcqv.userAnswer" (change)="checkBoxfired(mcqv)" mdbInputDirective type="checkbox" id="checkbox{{j}}">
+            <label class="form-check-label" for="checkbox{{j}}">{{mcqv.text}}</label>
+
+            <ng-container *ngIf="mcqv.mcqclick===2">
+              <span class="spanfailed">Wrong Answer</span>
+            </ng-container>
+          </div>
+        </div>
+    </div>
+    <div *ngSwitchCase="'match_words_to_pictures'">
+      <div class="col-md-6 col-sm-12 offset-md-3  mt-5 mb-5">
+        <h6 class="text-center mb-5 mt-2">{{mawpTitle}}</h6>
+        <ng-container *ngFor="let mawp of mawpImage; let j= index">
+        <div class="row mb-3" >
+
+              <div class="col-md-6 col-sm-6" >
+                  <img src="{{mawp}}" alt="" width="100px" height="100px">
+              </div>
+            <div class="col-md-6 col-sm-6 card2 " mwlDroppable [ngStyle]="mawpdropStyle2[j]"   (drop)="dropPhrase($event,j)" >
+                <p >{{mawpdroppedData[j]}}</p>
+            </div>
+          </div>
+        </ng-container>
+        <div class="text-center">
+            <div class="d-inline" *ngFor="let mawpq of mawpQues; let i=index">
+              <a  class="btn  btn-primary waves-light" mdbWavesEffect mwlDraggable  [ngStyle]="mawpdropStyle[i]" [dropData]="mawpq">{{mawpq}}</a>
+            </div>
+        </div>
+        </div>
+      </div>
+  </div>
+</div>
+</div>
+<div class="pull-right"  *ngIf="!haselError">
+    <a (click)="checkpage()"  class="float-right mt-1 mb-5 photoiconandtext" >Next</a>
+</div>
+<div class="breadcom purpel-bg  ">
+    <div class="container"></div>
+</div>
